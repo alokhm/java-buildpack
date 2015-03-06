@@ -192,6 +192,7 @@ module JavaBuildpack
            document = read_xml server_xml
            host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
             #autoDeploy="false" deployOnStartup="false"
+            puts @application
             puts @application.environment
             puts "Environment Variables: #{ENV.to_hash}"
             
