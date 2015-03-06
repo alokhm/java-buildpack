@@ -206,10 +206,10 @@ module JavaBuildpack
             
            # puts "tomcat auto deploy false #{@application.environment["tomcat-auto-deploy-enable"]}"
             #puts @application.environment.fetch("tomcat-auto-deploy-enable")
-            if puts ENV["deploy"]  == false  
+           puts "value in appender block #{ENV["deploy"]}"
              host.add_attribute 'autoDeploy', false
              host.add_attribute 'deployOnStartup', false
-           end
+           
             contextpaths.each do | artifactname,contextpath|
               context = REXML::Element.new('Context')
               context.add_attribute 'docBase', artifactname
