@@ -45,6 +45,7 @@ module JavaBuildpack
         #puts @application
         #puts @application.environment
         puts "environment varible in tomcat file #{@environment}"
+        puts @environment["p1"]
          download(@version, @uri) { |file| expand file }
           if isYaml?
                wars = []
