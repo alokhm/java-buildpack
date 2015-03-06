@@ -42,6 +42,8 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
+        puts @application
+        puts @application.environment
          download(@version, @uri) { |file| expand file }
           if isYaml?
                wars = []
@@ -192,9 +194,9 @@ module JavaBuildpack
            document = read_xml server_xml
            host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
             #autoDeploy="false" deployOnStartup="false"
-            puts @application
-            puts @application.environment
-            puts "Environment Variables: #{ENV.to_hash}"
+           # puts @application
+            #puts @application.environment
+           # puts "Environment Variables: #{ENV.to_hash}"
             
             
             #puts @application.environment["tomcat-auto-deploy-enable"]
