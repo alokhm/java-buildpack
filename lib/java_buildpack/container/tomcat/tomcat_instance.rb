@@ -195,6 +195,7 @@ module JavaBuildpack
             puts @application
             puts @application.environment
             puts "Environment Variables: #{ENV.to_hash}"
+            puts "last"
             
             #puts @application.environment["tomcat-auto-deploy-enable"]
             
