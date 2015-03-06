@@ -54,7 +54,7 @@ module JavaBuildpack
         initial = children(root)
         @root   = JavaBuildpack::Util::FilteringPathname.new(root, ->(path) { initial.member? path }, false)
         @environment = ENV.to_hash
-       puts "environment varible in application file #{@environment}"
+       
         @details     = parse(@environment.delete('VCAP_APPLICATION'))
         @services    = Services.new(parse(@environment.delete('VCAP_SERVICES')))
       end
