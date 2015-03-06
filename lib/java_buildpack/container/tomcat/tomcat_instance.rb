@@ -45,7 +45,7 @@ module JavaBuildpack
         #puts @application
         #puts @application.environment
         
-        puts ENV.to_hash
+        #puts ENV.to_hash
         #puts ENV["p1"]
          download(@version, @uri) { |file| expand file }
           if isYaml?
