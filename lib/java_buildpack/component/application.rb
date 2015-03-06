@@ -57,7 +57,6 @@ module JavaBuildpack
         @environment = ENV.to_hash
         @details     = parse(@environment.delete('VCAP_APPLICATION'))
         @services    = Services.new(parse(@environment.delete('VCAP_SERVICES')))
-        puts  @environment
       end
 
       private
