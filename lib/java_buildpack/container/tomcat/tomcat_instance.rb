@@ -193,7 +193,7 @@ module JavaBuildpack
            host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
             #autoDeploy="false" deployOnStartup="false"
             puts "tomcat auto deploy false #{@application.environment["tomcat-auto-deploy-enable"]}"
-            if @application.environment["tomcat-auto-deploy-enable"] == 'false'  
+            if @application.environment[:tomcat-auto-deploy-enable] == false  
              host.add_attribute 'autoDeploy', false
              host.add_attribute 'deployOnStartup', false
             end 
