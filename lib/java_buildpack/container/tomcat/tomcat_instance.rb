@@ -208,7 +208,7 @@ module JavaBuildpack
             #puts @application.environment.fetch("tomcat-auto-deploy-enable")
            puts "value in appender block #{ENV["deploy"]}"
              env1=ENV["deploy"]
-             if env1 == 'false'
+             if env1 == 'true'
              host.add_attribute 'autoDeploy', false
              host.add_attribute 'deployOnStartup', false
              end
