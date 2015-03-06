@@ -53,7 +53,7 @@ module JavaBuildpack
       def initialize(root)
         initial = children(root)
         @root   = JavaBuildpack::Util::FilteringPathname.new(root, ->(path) { initial.member? path }, false)
-
+        puts "first"
         @environment = ENV.to_hash
         @details     = parse(@environment.delete('VCAP_APPLICATION'))
         @services    = Services.new(parse(@environment.delete('VCAP_SERVICES')))
