@@ -20,7 +20,7 @@
 # e.g.  repository_root: "http://example.com/oracle-jre/{platform}/{architecture}"
 
 #repository_root: ""
-repository_root: "https://s3.amazonaws.com/covisintrnd.com-software/jdk-8u25-linux-x64.gz"
+repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
 version: 1.8.0_+
 memory_sizes:
   metaspace: 64m..
