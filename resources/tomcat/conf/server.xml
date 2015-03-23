@@ -22,7 +22,7 @@
         <Connector port='${http.port}' bindOnInit="false"/>
         <Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
 disableUploadTimeout="true" enableLookups="false" maxThreads="25"
-port="8443" keystoreFile="k1" keystorePass="tomcat"
+port="8443" keystoreFile="/conf/k1" keystorePass="tomcat"
 protocol="org.apache.coyote.http11.Http11NioProtocol" scheme="https"
 secure="true" sslProtocol="TLS" />
 
