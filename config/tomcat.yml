@@ -36,7 +36,7 @@ redis_store:
   connection_pool_size: 2
 gemfire_store:
   gemfire:
-    version: 8.0.+
+    version: 7.0.+
     repository_root: "{default.repository.root}/gem-fire"
   #gemfire_modules:
     #version: 8.0.+
