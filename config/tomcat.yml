@@ -19,17 +19,17 @@ tomcat:
   version: 7.0.+
   repository_root: "{default.repository.root}/tomcat"
 lifecycle_support:
-  version: 1.+
+  version: 2.1.0
   repository_root: "{default.repository.root}/tomcat-lifecycle-support"
 logging_support:
-  version: 1.+
+  version: 2.1.0
   repository_root: "{default.repository.root}/tomcat-logging-support"
 access_logging_support:
-  version: 1.+
+  version: 2.1.0
   repository_root: "{default.repository.root}/tomcat-access-logging-support"
   access_logging: disabled
 redis_store:
-  version: 1.+
+  version: 2.1.0
   repository_root: "{default.repository.root}/redis-store"
   database: 0
   timeout: 2000
