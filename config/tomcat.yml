@@ -19,7 +19,6 @@ tomcat:
   version: 7.0.57
   #repository_root: "{default.repository.root}/tomcat"
    repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
-  
 lifecycle_support:
   version: 2.+
   repository_root: "{default.repository.root}/tomcat-lifecycle-support"
