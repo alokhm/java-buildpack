@@ -38,9 +38,9 @@ gemfire_store:
   gemfire:
     version: 8.0.+
     repository_root: "{default.repository.root}/gem-fire"
-  gemfire_modules:
-    version: 8.0.+
-    repository_root: "{default.repository.root}/gem-fire-modules"
+  #gemfire_modules:
+    #version: 8.0.+
+    #repository_root: "{default.repository.root}/gem-fire-modules"
   gemfire_modules_tomcat7:
     version: 8.0.+
     repository_root: "{default.repository.root}/gem-fire-modules-tomcat7"
