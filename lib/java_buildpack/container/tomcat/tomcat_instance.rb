@@ -94,7 +94,7 @@ module JavaBuildpack
 
       private
 
-      TOMCAT_8 = JavaBuildpack::Util::TokenizedVersion.new('7.0.0').freeze
+      TOMCAT_8 = JavaBuildpack::Util::TokenizedVersion.new('8.0.0').freeze
 
       private_constant :TOMCAT_8
 
