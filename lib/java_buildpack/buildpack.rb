@@ -148,10 +148,11 @@ module JavaBuildpack
     def instantiate(components, additional_libraries, application, java_home, java_opts, root)
       components.map do |component|
         @logger.debug { "Instantiating #{component}" }
-
+        puts "component are #{component}"
         require_component(component)
 
         component_id = component.split('::').last.snake_case
+        puts "componentid are #{component_id}"
         context      = {
           application:   application,
           configuration: Util::ConfigurationUtils.load(component_id),
