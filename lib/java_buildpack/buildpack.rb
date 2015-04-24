@@ -152,6 +152,7 @@ module JavaBuildpack
         require_component(component)
 
         component_id = component.split('::').last.snake_case
+        puts "component id for yml is #{component_id}"
         context      = {
           application:   application,
           configuration: Util::ConfigurationUtils.load(component_id),
