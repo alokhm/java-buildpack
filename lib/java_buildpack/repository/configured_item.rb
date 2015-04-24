@@ -56,7 +56,7 @@ module JavaBuildpack
 
         KEY_VERSION = 'version'.freeze
 
-        private_constant :KEY_REPOSITORY_ROOT, :KEY_VERSION
+        private_constant :KEY_REPOSITORY_ROOT, :KEY_VERSION, :KEY_JDK
 
         def index(repository_root)
           RepositoryIndex.new(repository_root)
@@ -66,6 +66,10 @@ module JavaBuildpack
           unless configuration.key? KEY_REPOSITORY_ROOT
             fail "A repository root must be specified as a key-value pair of '#{KEY_REPOSITORY_ROOT}'' to the URI of " \
                  'the repository.'
+          else configuration.key? KEY_JDK
+            
+            configuration[KEY_JDK]
+                 
           end
 
           configuration[KEY_REPOSITORY_ROOT]
