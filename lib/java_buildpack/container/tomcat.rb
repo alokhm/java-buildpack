@@ -33,6 +33,13 @@ module JavaBuildpack
     class Tomcat < JavaBuildpack::Component::ModularComponent
 
       protected
+      @application.root.entries.find_all do |p|               
+                           # load yaml file from app dir
+                           if p.fnmatch?('*.yaml')
+                             @config=YAML::load_file(File.join(@application.root.to_s, p.to_s))
+                             puts "#{@config}"
+                             end
+                             end
 
       # (see JavaBuildpack::Component::ModularComponent#command)
       def command
@@ -49,12 +56,7 @@ module JavaBuildpack
       # (see JavaBuildpack::Component::ModularComponent#sub_components)
       def sub_components(context)
         [
-          @application.root.entries.find_all do |p|               
-                           # load yaml file from app dir
-                           if p.fnmatch?('*.yaml')
-                             @config=YAML::load_file(File.join(@application.root.to_s, p.to_s))
-                             end
-                             end
+          
           TomcatInstance.new(sub_configuration_context(context, 'tomcat')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
