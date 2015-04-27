@@ -62,7 +62,7 @@ module JavaBuildpack
                              end
         [
           
-          TomcatInstance.new(sub_configuration_context(context, "#{@config["servername"]}")),
+          TomcatInstance.new(sub_configuration_context(context, 'tomcat7')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
           TomcatLoggingSupport.new(sub_configuration_context(context, 'logging_support')),
