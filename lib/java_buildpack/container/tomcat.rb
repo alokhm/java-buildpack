@@ -51,15 +51,16 @@ module JavaBuildpack
       #tomcatversion
       
       def sub_components(context)
-      	@application.root.entries.find_all do |p|               
+      	
+        [
+          @application.root.entries.find_all do |p|               
                            # load yaml file from app dir
                            if p.fnmatch?('*.yaml')
                              @config=YAML::load_file(File.join(@application.root.to_s, p.to_s))
                              puts "config is #{@config}"
                              puts "#{@config["servername"]}"
                              end
-                             end
-        [
+                             end ,
           TomcatInstance.new(sub_configuration_context(context, 'tomcat7')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
