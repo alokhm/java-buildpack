@@ -48,7 +48,7 @@ module JavaBuildpack
       end
 
       # (see JavaBuildpack::Component::ModularComponent#sub_components)
-      tomcatversion
+      #tomcatversion
       def sub_components(context)
         [
           
