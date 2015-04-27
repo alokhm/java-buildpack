@@ -48,10 +48,11 @@ module JavaBuildpack
       end
 
       # (see JavaBuildpack::Component::ModularComponent#sub_components)
+      tomcatversion
       def sub_components(context)
         [
           
-          TomcatInstance.new(sub_configuration_context(context, '@config["servername"]')),
+          TomcatInstance.new(sub_configuration_context(context, @config["servername"])),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
           TomcatLoggingSupport.new(sub_configuration_context(context, 'logging_support')),
