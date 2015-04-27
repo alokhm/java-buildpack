@@ -53,6 +53,7 @@ module JavaBuildpack
       def sub_components(context)
       	
         [
+          super(context)	
           @application.root.entries.find_all do |p|               
                            # load yaml file from app dir
                            if p.fnmatch?('*.yaml')
