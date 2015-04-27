@@ -72,11 +72,11 @@ module JavaBuildpack
                            # load yaml file from app dir
                            if p.fnmatch?('*.yaml')
                              @config=YAML::load_file(File.join(@application.root.to_s, p.to_s))
-                             puts "#{@config}"
+                             puts "config in yaml is#{@config}"
                              end
                              end
      
-     
+     end
       private
 
       def web_inf?
