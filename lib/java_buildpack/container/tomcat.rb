@@ -51,6 +51,12 @@ module JavaBuildpack
       #tomcatversion
       
       def sub_components(context)
+      	@application.root.entries.find_all do |p|               
+                           # load yaml file from app dir
+                           if p.fnmatch?('*.yaml')
+                             @config=YAML::load_file(File.join(@application.root.to_s, p.to_s))
+                             end
+                             end
         [
           
           TomcatInstance.new(sub_configuration_context(context, 'tomcat7')),
@@ -60,7 +66,7 @@ module JavaBuildpack
           TomcatAccessLoggingSupport.new(sub_configuration_context(context, 'access_logging_support')),
           TomcatRedisStore.new(sub_configuration_context(context, 'redis_store')),
           TomcatGemfireStore.new(sub_configuration_context(context, 'gemfire_store')),
-          TomcatInsightSupport.new(context)
+          TomcatInsightSupport.new(context),
         ]
       end
 
