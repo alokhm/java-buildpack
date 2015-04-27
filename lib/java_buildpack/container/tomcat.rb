@@ -50,7 +50,7 @@ module JavaBuildpack
       # (see JavaBuildpack::Component::ModularComponent#sub_components)
       def sub_components(context)
         [
-          tomcatversion
+          
           TomcatInstance.new(sub_configuration_context(context, 'tomcat')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
