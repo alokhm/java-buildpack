@@ -60,7 +60,7 @@ module JavaBuildpack
                              puts "config is #{@config}"
                              puts "#{@config["servername"]}"
                              end
-                             end ,
+                             end
           TomcatInstance.new(sub_configuration_context(context, 'tomcat7')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
