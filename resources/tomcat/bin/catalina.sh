@@ -96,7 +96,8 @@
 # -----------------------------------------------------------------------------
 
 # OS specific support.  $var _must_ be set to either true or false.
-export CATALINA_OPTS=-agentpath:/home/vcap/app/.java-buildpack/tomcat/lib/agent/lib/libdtagent.so=name=tomcat,server=ec2-54-200-253-18.us-west-2.compute.amazonaws.com
+export CATALINA_OPTS=-agentpath:"/home/vcap/app/.java-buildpack/tomcat/lib/agent/lib/libdtagent.so"=name=tomcat,server=54.200.253.18:9911
+
 cygwin=false
 darwin=false
 os400=false
