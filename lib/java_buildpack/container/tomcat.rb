@@ -49,6 +49,16 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::ModularComponent#sub_components)
       #tomcatversion
+      def tomcatversion
+      @application.root.entries.find_all do |p|               
+                           # load yaml file from app dir
+                           if p.fnmatch?('*.yaml')
+                             @config=YAML::load_file(File.join(@application.root.to_s, p.to_s))
+                             puts "config in yaml is#{@config}"
+                             end
+                             end
+     
+     end
       def sub_components(context)
         [
           
@@ -68,16 +78,7 @@ module JavaBuildpack
         web_inf? && !JavaBuildpack::Util::JavaMainUtils.main_class(@application)
       end
       
-      def tomcatversion
-      @application.root.entries.find_all do |p|               
-                           # load yaml file from app dir
-                           if p.fnmatch?('*.yaml')
-                             @config=YAML::load_file(File.join(@application.root.to_s, p.to_s))
-                             puts "config in yaml is#{@config}"
-                             end
-                             end
-     
-     end
+      
       private
 
       def web_inf?
