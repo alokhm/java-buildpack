@@ -24,6 +24,7 @@ require 'java_buildpack/container/tomcat/tomcat_logging_support'
 require 'java_buildpack/container/tomcat/tomcat_access_logging_support'
 require 'java_buildpack/container/tomcat/tomcat_redis_store'
 require 'java_buildpack/container/tomcat/tomcat_gemfire_store'
+require 'yaml'
 
 module JavaBuildpack
   module Container
@@ -48,6 +49,12 @@ module JavaBuildpack
       # (see JavaBuildpack::Component::ModularComponent#sub_components)
       def sub_components(context)
         [
+          @application.root.entries.find_all do |p|               
+                           # load yaml file from app dir
+                           if p.fnmatch?('*.yaml')
+                             @config=YAML::load_file(File.join(@application.root.to_s, p.to_s))
+                             end
+                             end
           TomcatInstance.new(sub_configuration_context(context, 'tomcat')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
