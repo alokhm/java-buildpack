@@ -53,7 +53,7 @@ module JavaBuildpack
       def sub_components(context)
       	
         [
-          super(context),	
+          	
           @application.root.entries.find_all do |p|               
                            # load yaml file from app dir
                            if p.fnmatch?('*.yaml')
@@ -62,7 +62,7 @@ module JavaBuildpack
                              puts "#{@config["servername"]}"
                              end
                              end ,
-          TomcatInstance.new(sub_configuration_context(context, "#{@config["servername"]}")),
+          #TomcatInstance.new(sub_configuration_context(context, "#{@config["servername"]}")),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
           TomcatLoggingSupport.new(sub_configuration_context(context, 'logging_support')),
@@ -70,6 +70,7 @@ module JavaBuildpack
           TomcatRedisStore.new(sub_configuration_context(context, 'redis_store')),
           TomcatGemfireStore.new(sub_configuration_context(context, 'gemfire_store')),
           TomcatInsightSupport.new(context),
+          TomcatInstance.new(sub_configuration_context(context, "#{@config["servername"]}"))
         ]
       end
 
