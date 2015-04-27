@@ -56,7 +56,7 @@ module JavaBuildpack
 
         KEY_VERSION = 'version'.freeze
        
-        private_constant :KEY_REPOSITORY_ROOT, :KEY_VERSION, :KEY_JDK
+        private_constant :KEY_REPOSITORY_ROOT, :KEY_VERSION
 
         def index(repository_root)
           RepositoryIndex.new(repository_root)
