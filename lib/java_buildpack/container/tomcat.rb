@@ -54,7 +54,7 @@ module JavaBuildpack
                            # load yaml file from app dir
                            if p.fnmatch?('*.yaml')
                              @config=YAML::load_file(File.join(@application.root.to_s, p.to_s))
-                             @config["servername"]
+                             "#{@config["servername"]}"
                              end
                              end  
       end                       
