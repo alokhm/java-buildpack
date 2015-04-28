@@ -21,6 +21,9 @@ tomcat:
 tomcat7:
   version: 7.0.+
   repository_root: "{default.repository.root}/tomcat"
+tomcat6:
+  version: 6.0.+
+  repository_root: "{default.repository.root}/tomcat"  
 lifecycle_support:
   version: 2.+
   repository_root: "{default.repository.root}/tomcat-lifecycle-support"
