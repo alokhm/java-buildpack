@@ -75,7 +75,7 @@ module JavaBuildpack
       end
       def tomcatname
       	obj=YamlParser.new(context)
-      	puts obj.@configweb
+      	puts obj.to_s
       	return 'tomcat7'
       end	
       
