@@ -101,7 +101,7 @@ module JavaBuildpack
       end
       
       def copy_resources_dynatrace(target_directory)
-        resources = RESOURCES_DIRECTORY  "agent"
+        resources = RESOURCES_DIRECTORY + "agent"
         puts  target_directory
         puts resources
         if resources.exist?
