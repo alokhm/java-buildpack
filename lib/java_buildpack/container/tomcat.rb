@@ -32,9 +32,7 @@ module JavaBuildpack
     # Encapsulates the detect, compile, and release functionality for Tomcat applications.
     class Tomcat < JavaBuildpack::Component::ModularComponent
 
-   if $configweb.nil?
-   $configweb='tomcat'	
-   end 	
+   
       protected
       
 
@@ -60,7 +58,7 @@ module JavaBuildpack
           
           #puts "#{@configweb}"
           YamlParser.new(context),
-          TomcatInstance.new(sub_configuration_context(context,  $configweb)),
+          TomcatInstance.new(sub_configuration_context(context,  configcheck)),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           
           TomcatLoggingSupport.new(sub_configuration_context(context, 'logging_support')),
@@ -77,6 +75,13 @@ module JavaBuildpack
         web_inf? && !JavaBuildpack::Util::JavaMainUtils.main_class(@application)
       end
      
+   def configcheck
+   if $configweb.nil?
+   $configweb='tomcat'
+   else
+   	$configweb
+   end 	
+  end 
       
       private
 
