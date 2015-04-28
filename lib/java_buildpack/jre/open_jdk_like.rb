@@ -43,7 +43,7 @@ module JavaBuildpack
         #puts "#{@configuration['openjdk8']}"
         @configuration=@configuration['openjdk8']
         @configuration=Hash[@configuration.map.with_index { |value, index| [index, value] }]
-        @configuration=@configuration['repository_root']
+        puts "#{@configuration}"
         @version, @uri             = JavaBuildpack::Repository::ConfiguredItem.find_item(@component_name,
                                                                                          @configuration)
         @droplet.java_home.version = @version
