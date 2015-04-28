@@ -74,6 +74,8 @@ module JavaBuildpack
         web_inf? && !JavaBuildpack::Util::JavaMainUtils.main_class(@application)
       end
       def tomcatname
+      	obj=YamlParser.new(context)
+      	puts obj.@configweb
       	return 'tomcat7'
       end	
       
