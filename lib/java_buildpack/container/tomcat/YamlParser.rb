@@ -41,7 +41,7 @@ class YamlParser < JavaBuildpack::Component::BaseComponent
                               @webapps = @config['webapps']
                               @libraries=@config['libraries'] 
                               @configweb=@config["configweb"]["servername"]
-                              puts "#{@configweb}"
+                              
                               unless @libraries.nil?
                                 @libraries.each do|lib|
                                     ['g', 'a', 'v'].each {|key| abort "Invalid YAML format in libraries" unless !lib.is_a?(String) && lib.has_key?(key)} 
