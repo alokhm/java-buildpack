@@ -56,7 +56,7 @@ module JavaBuildpack
           	
           
           YamlParser.new(context),
-          TomcatInstance.new(sub_configuration_context(context, "#{@configweb}")),
+          TomcatInstance.new(sub_configuration_context(context, '"#{@configweb}"')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           
           TomcatLoggingSupport.new(sub_configuration_context(context, 'logging_support')),
