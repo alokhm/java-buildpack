@@ -55,7 +55,7 @@ module JavaBuildpack
         [
           	
           
-          puts "#{@configweb}"
+          puts "#{@configweb}",
           TomcatInstance.new(sub_configuration_context(context, 'tomcat7')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
