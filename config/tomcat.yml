@@ -15,6 +15,9 @@
 
 # Configuration for the Tomcat container
 ---
+tomcat:
+  version: 8.0.+
+  repository_root: "{default.repository.root}/tomcat"
 tomcat7:
   version: 7.0.+
   repository_root: "{default.repository.root}/tomcat"
