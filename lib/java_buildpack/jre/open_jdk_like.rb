@@ -39,6 +39,8 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::BaseComponent#detect)
       def detect
+        puts "#{@configuration}"
+        @configuration=@configuration['openjdk8']
         @version, @uri             = JavaBuildpack::Repository::ConfiguredItem.find_item(@component_name,
                                                                                          @configuration)
         @droplet.java_home.version = @version
