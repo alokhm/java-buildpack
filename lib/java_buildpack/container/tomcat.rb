@@ -32,6 +32,9 @@ module JavaBuildpack
     # Encapsulates the detect, compile, and release functionality for Tomcat applications.
     class Tomcat < JavaBuildpack::Component::ModularComponent
 
+   if $configweb.nil?
+   $configweb='tomcat'	
+   end 	
       protected
       
 
