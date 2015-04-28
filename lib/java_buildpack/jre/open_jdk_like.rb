@@ -42,7 +42,7 @@ module JavaBuildpack
         #puts "#{@configuration}"
         #puts "#{@configuration['openjdk8']}"
         @configuration=@configuration['openjdk8']
-        @configuration=Hash[@configuration.map.with_index { |value, index| [index, value] }]
+        @configuration=Hash[(0...@configuration.size).zip @configuration]
         puts "#{@configuration}"
         @version, @uri             = JavaBuildpack::Repository::ConfiguredItem.find_item(@component_name,
                                                                                          @configuration)
