@@ -39,7 +39,7 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::BaseComponent#detect)
       def detect
-        puts "#{@configuration}"
+        #puts "#{@configuration}"
         #puts "#{@configuration['openjdk8']}"
         #@configuration=@configuration['openjdk8']
         
