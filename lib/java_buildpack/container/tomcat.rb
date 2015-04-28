@@ -55,10 +55,9 @@ module JavaBuildpack
         [
           	
           
-          #TomcatInstance.new(sub_configuration_context(context, 'tomcat')),
+          TomcatInstance.new(sub_configuration_context(context, 'tomcat')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           YamlParser.new(context),
-          TomcatInstance.new(sub_configuration_context(context, "#{@servername}")),
           TomcatLoggingSupport.new(sub_configuration_context(context, 'logging_support')),
           TomcatAccessLoggingSupport.new(sub_configuration_context(context, 'access_logging_support')),
           TomcatRedisStore.new(sub_configuration_context(context, 'redis_store')),
