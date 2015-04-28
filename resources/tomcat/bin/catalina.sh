@@ -96,7 +96,7 @@
 # -----------------------------------------------------------------------------
 
 # OS specific support.  $var _must_ be set to either true or false.
-export CATALINA_OPTS=-agentpath:"/home/vcap/app/.java-buildpack/agent/lib64/libdtagent.so"=name=Tomcat_Monitoring2,server=ip-172-31-0-69:9998
+#export CATALINA_OPTS=-agentpath:"/home/vcap/app/.java-buildpack/agent/lib64/libdtagent.so"=name=Tomcat_Monitoring2,server=ip-172-31-0-69:9998
 
 cygwin=false
 darwin=false
