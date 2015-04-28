@@ -57,7 +57,7 @@ module JavaBuildpack
           
           #puts "#{@configweb}"
           YamlParser.new(context),
-          TomcatInstance.new(sub_configuration_context(context, tomcatname(context))),
+          TomcatInstance.new(sub_configuration_context(context,  $configweb)),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
           
           TomcatLoggingSupport.new(sub_configuration_context(context, 'logging_support')),
@@ -73,11 +73,7 @@ module JavaBuildpack
       def supports?
         web_inf? && !JavaBuildpack::Util::JavaMainUtils.main_class(@application)
       end
-      def tomcatname(context)
-      	obj=YamlParser.new(context)
-      	puts $configweb
-      	return 'tomcat7'
-      end	
+     
       
       private
 
