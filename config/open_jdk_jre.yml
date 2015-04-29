@@ -29,11 +29,11 @@ openjdk8:
 openjdk7: 
   memory_heuristics: 
     heap: 75
-    metaspace: 10
+    permgen: 10
     native: 10
     stack: 5
   memory_sizes: 
-    metaspace: 64m..
+    permgen: 64m..
   repository_root: "{default.repository.root}/openjdk/{platform}/{architecture}"
   version: 1.7.0_+
 
