@@ -64,13 +64,7 @@ module JavaBuildpack
       end
       
       def find_jdk_version_config
-         if @configuration.key?$configapp 
-         @configuration=@configuration[$configapp]
-       else
-         $configapp='openjdk8'
-         @configuration=@configuration[$configapp]
-       
-       end
+         @configuration=@configuration[@configuration.key?$configapp?$configapp:'openjdk8']
       end 
       private
 
