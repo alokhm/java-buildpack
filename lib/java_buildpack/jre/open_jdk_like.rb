@@ -64,7 +64,7 @@ module JavaBuildpack
       end
       
       def find_jdk_version_config
-         @configuration=@configuration['openjdk8']
+         @configuration=@configuration[$appname]
       end 
       private
 
