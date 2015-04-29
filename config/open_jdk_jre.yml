@@ -37,7 +37,7 @@ openjdk7:
   repository_root: "{default.repository.root}/openjdk/{platform}/{architecture}"
   version: 1.7.0_+
 oraclejdk8:  
-  repository_root: ""
+  repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
   version: 1.8.0_+
 memory_sizes:
   metaspace: 64m..
@@ -49,7 +49,7 @@ memory_heuristics:
   stack: 5
   native: 10
 oraclejdk7:  
-  repository_root: ""
+  repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
   version: 1.8.0_+
 memory_sizes:
   permgen: 64m..
