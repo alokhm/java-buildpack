@@ -64,7 +64,11 @@ module JavaBuildpack
       end
       
       def find_jdk_version_config
+         if @configuration.key?$configapp
          @configuration=@configuration[$configapp]
+       else
+         @configuration
+       end
       end 
       private
 
