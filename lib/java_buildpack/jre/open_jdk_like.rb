@@ -67,7 +67,7 @@ module JavaBuildpack
          if @configuration.key?$configapp
          @configuration=@configuration[$configapp]
        else
-         @configuration
+         @configuration['repository_root']
        end
       end 
       private
