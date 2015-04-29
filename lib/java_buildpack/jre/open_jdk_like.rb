@@ -18,6 +18,7 @@ require 'fileutils'
 require 'java_buildpack/component/versioned_dependency_component'
 require 'java_buildpack/jre'
 require 'java_buildpack/jre/memory/openjdk_memory_heuristic_factory'
+require  ''
 
 module JavaBuildpack
   module Jre
@@ -33,7 +34,7 @@ module JavaBuildpack
         @component_name = self.class.to_s.space_case
         @configuration  = context[:configuration]
         @droplet        = context[:droplet]
-
+        @yamlparser= YAMLParser.new(context)
         @droplet.java_home.root = @droplet.sandbox
       end
 
