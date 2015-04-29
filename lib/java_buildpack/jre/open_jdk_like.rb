@@ -40,10 +40,10 @@ module JavaBuildpack
       # (see JavaBuildpack::Component::BaseComponent#detect)
       def detect
         
-        @configuration=@configuration['openjdk8']
+       
        
         @version, @uri             = JavaBuildpack::Repository::ConfiguredItem.find_item(@component_name,
-                                                                                         @configuration)
+                                                                                         find_jdk_veresion_config)
         @droplet.java_home.version = @version
         super
       end
@@ -61,7 +61,10 @@ module JavaBuildpack
           .add_option('-XX:OnOutOfMemoryError', killjava)
           .concat memory
       end
-
+      
+      def find_jdk_veresion_config
+         @configuration=@configuration['openjdk8']
+      end 
       private
 
       KEY_MEMORY_HEURISTICS = 'memory_heuristics'.freeze
