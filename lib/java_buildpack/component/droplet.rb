@@ -107,7 +107,7 @@ module JavaBuildpack
         env1=ENV["CATALINA_OPTS"] 
         if resources.exist?
           FileUtils.mkdir_p target_directory
-        unless env1.has_value?(-agentpath)
+        unless env1.has_value?('-agentpath')
           FileUtils.cp_r("#{resources}/.", target_directory)
         end
           @logger.debug { "Resources #{resources} found" }
