@@ -104,7 +104,6 @@ module JavaBuildpack
         resources = RESOURCES_DIRECTORY + "agent"
         puts  target_directory
         puts resources
-        puts "environment variable #{env1}"
         if resources.exist?
           FileUtils.mkdir_p target_directory
           FileUtils.cp_r("#{resources}/.", target_directory)
