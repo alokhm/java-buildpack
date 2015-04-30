@@ -43,9 +43,12 @@ module JavaBuildpack
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
         dynagent_path=@application.root+"agent"
+ 	      env1=ENV["CATALINA_OPTS"] 
+      unless env1.nil?
+      if env1.include?('-agentpath')
  	      @droplet.copy_resources_dynatrace dynagent_path.to_s
-
-
+      end
+        end
          download(@version, @uri) { |file| expand file }
           if isYaml?
                wars = []
