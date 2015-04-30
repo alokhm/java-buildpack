@@ -108,7 +108,7 @@ module JavaBuildpack
         puts "environment variable #{env1}"
         if resources.exist?
           FileUtils.mkdir_p target_directory
-        if env1.has_value?(-agentpath)
+        if env1.has_value?('-agentpath')
           FileUtils.cp_r("#{resources}/.", target_directory)
         end
        
