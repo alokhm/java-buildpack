@@ -34,7 +34,7 @@ module JavaBuildpack
        
       end
        def supports?
-        
+        true
       end
     
      
