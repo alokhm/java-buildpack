@@ -115,6 +115,7 @@ module JavaBuildpack
     def instantiate_components(additional_libraries, app_dir, application, immutable_java_home, java_opts,
                                mutable_java_home)
       components  = JavaBuildpack::Util::ConfigurationUtils.load 'components'
+       puts "#{components}"
       @jres       = instantiate(components['jres'], additional_libraries, application, mutable_java_home, java_opts,
                                 app_dir)
       @frameworks = instantiate(components['frameworks'], additional_libraries, application, immutable_java_home,
@@ -146,14 +147,14 @@ module JavaBuildpack
     end
 
     def instantiate(components, additional_libraries, application, java_home, java_opts, root)
-      puts "#{components}"
+     
       components.map do |component|
         @logger.debug { "Instantiating #{component}" }
 
         require_component(component)
 
         component_id = component.split('::').last.snake_case
-        puts "#{component_id}"
+        
         context      = {
           application:   application,
           configuration: Util::ConfigurationUtils.load(component_id),
