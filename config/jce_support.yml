@@ -15,5 +15,5 @@
 
 # Configuration for the New Relic framework
 ---
-version: oraclejdk8
+version: oraclejdk8.0.0
 repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
