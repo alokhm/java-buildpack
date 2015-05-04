@@ -33,7 +33,9 @@ module JavaBuildpack
       def release
        
       end
-
+       def supports?
+        
+      end
     
      
     end
