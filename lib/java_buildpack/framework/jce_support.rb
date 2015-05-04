@@ -27,6 +27,7 @@ module JavaBuildpack
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
         download_zip
+        FileUtils.cp_r(@droplet.sandbox+"jce_support/.", @droplet.sandbox+"oracle_jre/jre/lib/security")
       end
 
       # (see JavaBuildpack::Component::BaseComponent#release)
