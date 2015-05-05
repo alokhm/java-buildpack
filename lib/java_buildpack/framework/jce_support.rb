@@ -66,7 +66,8 @@ module JavaBuildpack
          if @configuration.key?$configapp 
          @configuration=@configuration[$configapp]
          else
-         	@configuration=''
+         	$configapp='default'
+         	@configuration=@configuration[$configapp]
       
      end
     end 
