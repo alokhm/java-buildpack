@@ -21,6 +21,3 @@ oraclejdk7:
 oraclejdk8: 
   repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
   version: "3.1.0"
-default:
-  repository_root: ""
-  version: "1.1.1"
