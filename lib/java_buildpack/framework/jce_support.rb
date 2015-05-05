@@ -66,7 +66,7 @@ module JavaBuildpack
          if @configuration.key?$configapp 
          @configuration=@configuration[$configapp]
          else
-         	$configapp='default'
+         	$configapp='openjdk8'
          	@configuration=@configuration[$configapp]
       
      end
