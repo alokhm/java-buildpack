@@ -63,12 +63,12 @@ module JavaBuildpack
         true
       end
     def find_jce_version_config
-         if !@configuration.key?$configapp 
-         $configapp='oraclejdk8'
-         end      
+         if @configuration.key?$configapp 
          @configuration=@configuration[$configapp]
-      end 
-     
+       else
+         $configapp='oraclejdk8'
+         @configuration=@configuration[$configapp]
+     end    
     end
 
   end
