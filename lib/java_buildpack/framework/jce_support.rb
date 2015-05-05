@@ -60,13 +60,13 @@ module JavaBuildpack
 	  
 	  
        def supports?
-         if @configuration.key?$configapp 
-           return true
-        end
+         true
       end
     def find_jce_version_config
          if @configuration.key?$configapp 
          @configuration=@configuration[$configapp]
+         else
+         	@configuration=''
       
      end
     end 
