@@ -32,7 +32,6 @@ module JavaBuildpack
         @configuration  = context[:configuration]
         @droplet        = context[:droplet]
         YamlParser.new(context)
-        @droplet.java_home.root = @droplet.sandbox
       end
 	  
 	  # (see JavaBuildpack::Component::BaseComponent#detect)
