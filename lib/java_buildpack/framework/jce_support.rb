@@ -49,7 +49,7 @@ module JavaBuildpack
         puts $configapp
         if /oraclejdk[1-9]/.match($configapp)
         download_zip
-        FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/.", "/tmp/staged/app/.java-buildpack/oracle_jre/jre/lib/security")
+        FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/.", "/tmp/staged/app/.java-buildpack/open_jdk_jre/jre/lib/security")
         end
       end
 
