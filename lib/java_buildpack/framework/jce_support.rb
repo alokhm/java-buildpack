@@ -46,7 +46,7 @@ module JavaBuildpack
 	  
 	  # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
-        if /oraclejdk[0-9]/.match('$configapp')
+        if $configapp == 'oraclejdk7'
         download_zip
         FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/.", "/tmp/staged/app/.java-buildpack/open_jdk_jre/jre/lib/security")
         end
