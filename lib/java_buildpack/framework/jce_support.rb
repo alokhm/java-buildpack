@@ -36,11 +36,11 @@ module JavaBuildpack
 	  
 	  # (see JavaBuildpack::Component::BaseComponent#detect)
       def detect
-        @version, @uri             = JavaBuildpack::Repository::ConfiguredItem.find_item(@component_name,
-                                                                                         find_jce_version_config)
-        
+      	if @configuration.key?$configapp
+        @version, @uri             = JavaBuildpack::Repository::ConfiguredItem.find_item(@component_nam,find_jce_version_config)
         super
-      end
+        end
+     end
 
       
 	  
