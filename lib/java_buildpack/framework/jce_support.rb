@@ -38,7 +38,7 @@ module JavaBuildpack
       def detect
         @version, @uri             = JavaBuildpack::Repository::ConfiguredItem.find_item(@component_name,
                                                                                          find_jce_version_config)
-        @droplet.java_home.version = @version
+        
         super
       end
 
