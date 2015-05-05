@@ -17,14 +17,35 @@
 require 'fileutils'
 require 'java_buildpack/component/versioned_dependency_component'
 require 'java_buildpack/framework'
+require 'java_buildpack/container/tomcat/YamlParser'
 
 module JavaBuildpack
   module Framework
 
    
     class JceSupport < JavaBuildpack::Component::VersionedDependencyComponent
+      
+      # @param [Hash] context a collection of utilities used the component
+      def initialize(context)
+        @application    = context[:application]
+        @component_name = self.class.to_s.space_case
+        @configuration  = context[:configuration]
+        @droplet        = context[:droplet]
+        YamlParser.new(context)
+        @droplet.java_home.root = @droplet.sandbox
+      end
+	  
+	  # (see JavaBuildpack::Component::BaseComponent#detect)
+      def detect
+        @version, @uri             = JavaBuildpack::Repository::ConfiguredItem.find_item(@component_name,
+                                                                                         find_jce_version_config)
+        @droplet.java_home.version = @version
+        super
+      end
 
-      # (see JavaBuildpack::Component::BaseComponent#compile)
+      
+	  
+	  # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
         download_zip
         FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/.", "/tmp/staged/app/.java-buildpack/oracle_jre/jre/lib/security")
@@ -34,10 +55,17 @@ module JavaBuildpack
       def release
        
       end
+	  
+	  
        def supports?
         true
       end
-    
+    def find_jce_version_config
+         if !@configuration.key?$configapp 
+         $configapp='openjdk8'
+         end      
+         @configuration=@configuration[$configapp]
+      end 
      
     end
 
