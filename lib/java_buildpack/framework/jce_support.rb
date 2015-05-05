@@ -46,8 +46,10 @@ module JavaBuildpack
 	  
 	  # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
+        if $configapp = /oraclejdk[0-9]/
         download_zip
         FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/.", "/tmp/staged/app/.java-buildpack/oracle_jre/jre/lib/security")
+        end
       end
 
       # (see JavaBuildpack::Component::BaseComponent#release)
