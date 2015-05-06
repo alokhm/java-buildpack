@@ -83,9 +83,9 @@ module JavaBuildpack
 
       def memory
         sizes      = @configuration[KEY_MEMORY_SIZES] || {}
-        puts "memory sizes #{sizes}"
+        #puts "memory sizes #{sizes}"
         heuristics = @configuration[KEY_MEMORY_HEURISTICS] || {}
-        puts "memory heuristics #{heuristics}"
+        #puts "memory heuristics #{heuristics}"
         OpenJDKMemoryHeuristicFactory.create_memory_heuristic(sizes, heuristics, @version).resolve
       end
 
