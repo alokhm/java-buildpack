@@ -68,6 +68,7 @@ module JavaBuildpack
          $configapp='openjdk8'
          end      
          @configuration=@configuration[$configapp]
+         puts "configuration is #{@configuration}"
       end 
       private
 
@@ -83,9 +84,9 @@ module JavaBuildpack
 
       def memory
         sizes      = @configuration[KEY_MEMORY_SIZES] || {}
-        
+         puts "sizes is #{@configuration[KEY_MEMORY_SIZES]}"
         heuristics = @configuration[KEY_MEMORY_HEURISTICS] || {}
-        
+         puts "heuristics is #{@configuration[KEY_MEMORY_HEURISTICS]}"
         OpenJDKMemoryHeuristicFactory.create_memory_heuristic(sizes, heuristics, @version).resolve
       end
 
