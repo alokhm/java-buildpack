@@ -50,6 +50,7 @@ module JavaBuildpack
         download_zip 
         FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/.", "/tmp/staged/app/.java-buildpack/open_jdk_jre/jre/lib/security")
         FileUtils.rm_r("/tmp/staged/app/.java-buildpack/jce_support")
+        FileUtils.rm_r("/tmp/staged/app/.java-buildpack/jce_support.nil.nil")
         
         end
       end
