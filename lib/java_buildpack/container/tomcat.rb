@@ -64,10 +64,10 @@ module JavaBuildpack
         web_inf? && !JavaBuildpack::Util::JavaMainUtils.main_class(@application)
       end
    def configcheck
-     if $configweb.nil?
-     $configweb='tomcat'
+     if $configtomcat.nil?
+     $configtomcat='tomcat'
      else
-     $configweb
+     $configtomcat
    end 	
   end 
 
