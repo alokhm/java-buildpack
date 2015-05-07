@@ -48,7 +48,7 @@ module JavaBuildpack
       def compile
         if /oraclejdk[1-9]/.match($configjdk)
         download_zip false
-        FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/.", "/tmp/staged/app/.java-buildpack/open_jdk_jre/jre/lib/security")
+        FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/./.", "/tmp/staged/app/.java-buildpack/open_jdk_jre/jre/lib/security")
         FileUtils.rm_r("/tmp/staged/app/.java-buildpack/jce_support")
         
         end
