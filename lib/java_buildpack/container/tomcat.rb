@@ -65,7 +65,7 @@ module JavaBuildpack
       end
    def configcheck
      if $configtomcat.nil?
-     $configtomcat='tomcat'
+     $configtomcat='tomcat8'
      else
      $configtomcat
    end 	
