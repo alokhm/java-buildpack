@@ -36,7 +36,7 @@ module JavaBuildpack
 	  
 	  # (see JavaBuildpack::Component::BaseComponent#detect)
       def detect
-      	if @configuration.key?$configapp
+      	if @configuration.key?$configjdk
         @version, @uri             = JavaBuildpack::Repository::ConfiguredItem.find_item(@component_nam,find_jce_version_config)
         super
         end
@@ -46,8 +46,7 @@ module JavaBuildpack
 	  
 	  # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
-        puts $configapp
-        if /oraclejdk[1-9]/.match($configapp)
+        if /oraclejdk[1-9]/.match($configjdk)
         download_zip
         FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/.", "/tmp/staged/app/.java-buildpack/open_jdk_jre/jre/lib/security")
         end
@@ -59,12 +58,12 @@ module JavaBuildpack
       end
 	  
 	  
-       def supports?
+      # def supports?
         # true
-      end
+      #end
     def find_jce_version_config
-         if @configuration.key?$configapp 
-         @configuration=@configuration[$configapp]
+         if @configuration.key?$configjdk 
+         @configuration=@configuration[$configjdk]
          
      end
     end 
