@@ -34,7 +34,7 @@ openjdk8:
     stack: 5
   memory_sizes: 
     metaspace: 64m..
-  repository_root: "https://s3.amazonaws.com/covisintrnd.com-software/openjdk-1.8.0_40.tar.gz"
+  repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
   version: 1.8.1
 oraclejdk7: 
   memory_heuristics: 
