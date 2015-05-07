@@ -49,6 +49,7 @@ module JavaBuildpack
         if /oraclejdk[1-9]/.match($configjdk)
         download_zip
         FileUtils.cp_r("/tmp/staged/app/.java-buildpack/jce_support/.", "/tmp/staged/app/.java-buildpack/open_jdk_jre/jre/lib/security")
+        FileUtils.rm_r("/tmp/staged/app/.java-buildpack/jce_support*")
         end
       end
 
@@ -58,9 +59,7 @@ module JavaBuildpack
       end
 	  
 	  
-      # def supports?
-        # true
-      #end
+      
     def find_jce_version_config
          if @configuration.key?$configjdk 
          @configuration=@configuration[$configjdk]
