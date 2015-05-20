@@ -1,6 +1,6 @@
 # Encoding: utf-8
 # Cloud Foundry Java Buildpack
-# Copyright 2013 the original author or authors.
+# Copyright 2013-2015 the original author or authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,6 +39,12 @@ describe JavaBuildpack::Component::JavaOpts do
     opts.add_system_property 'test-key', 'test-value'
 
     expect(opts).to include('-Dtest-key=test-value')
+  end
+
+  it 'adds a bootclasspath property to the collection' do
+    opts.add_bootclasspath_p droplet.sandbox + 'test-bootclasspath'
+
+    expect(opts).to include('-Xbootclasspath/p:$PWD/.java-buildpack/java_opts/test-bootclasspath')
   end
 
   it 'adds a qualified option to the collection' do
