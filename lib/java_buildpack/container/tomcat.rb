@@ -1,6 +1,6 @@
 # Encoding: utf-8
 # Cloud Foundry Java Buildpack
-# Copyright 2013-2015 the original author or authors.
+# Copyright 2013 the original author or authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@ require 'java_buildpack/container'
 require 'java_buildpack/container/tomcat/tomcat_insight_support'
 require 'java_buildpack/container/tomcat/tomcat_instance'
 require 'java_buildpack/container/tomcat/tomcat_lifecycle_support'
+require 'java_buildpack/container/tomcat/YamlParser'  
 require 'java_buildpack/container/tomcat/tomcat_logging_support'
 require 'java_buildpack/container/tomcat/tomcat_access_logging_support'
 require 'java_buildpack/container/tomcat/tomcat_redis_store'
 require 'java_buildpack/container/tomcat/tomcat_gemfire_store'
-require 'java_buildpack/util/java_main_utils'
 
 module JavaBuildpack
   module Container
@@ -48,8 +48,9 @@ module JavaBuildpack
       # (see JavaBuildpack::Component::ModularComponent#sub_components)
       def sub_components(context)
         [
-          TomcatInstance.new(sub_configuration_context(context, 'tomcat')),
+          TomcatInstance.new(sub_configuration_context(context, 'tomcat7')),
           TomcatLifecycleSupport.new(sub_configuration_context(context, 'lifecycle_support')),
+          YamlParser.new(context),
           TomcatLoggingSupport.new(sub_configuration_context(context, 'logging_support')),
           TomcatAccessLoggingSupport.new(sub_configuration_context(context, 'access_logging_support')),
           TomcatRedisStore.new(sub_configuration_context(context, 'redis_store')),
@@ -66,10 +67,35 @@ module JavaBuildpack
       private
 
       def web_inf?
-        (@application.root + 'WEB-INF').exist?
+      	(@application.root + 'WEB-INF').exist? ||
+          wars_or_zips? || isYaml?
       end
 
-    end
+      def wars_or_zips?
+        @application.root.entries.find_all do |p|
+          if p.fnmatch?('*.war')
+            return true
+          elsif p.fnmatch?('*.zip')
+            # Check if zip contains war files
+            io = IO.popen(['unzip', '-lqq', File.join(@application.root.to_s, p.to_s), '*.war'])
+            io.read && io.close
+            return true if $?.exitstatus == 0
+            
+            
+          end
+        end
+        return false
+      end
+	def isYaml?
+       
+               @application.root.entries.find_all do |p|
+                      	if p.fnmatch?('*.yaml')
+                            return true
+                        end  
+              end   
+             return false
+         end   
+      end
 
   end
 end
