@@ -1,6 +1,6 @@
 # Encoding: utf-8
 # Cloud Foundry Java Buildpack
-# Copyright 2013-2015 the original author or authors.
+# Copyright 2013 the original author or authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,10 @@ require 'java_buildpack/component/versioned_dependency_component'
 require 'java_buildpack/container'
 require 'java_buildpack/container/tomcat/tomcat_utils'
 require 'java_buildpack/util/tokenized_version'
+require 'java_buildpack/container/tomcat/YamlParser'
+require 'open-uri'
+require 'pathname'
+require 'digest/sha1'
 
 module JavaBuildpack
   module Container
@@ -31,15 +35,50 @@ module JavaBuildpack
       #
       # @param [Hash] context a collection of utilities used the component
       def initialize(context)
+       
         super(context) { |candidate_version| candidate_version.check_size(3) }
-      end
+        @yamlobj=YamlParser.new(context)
+       end
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
-        download(@version, @uri) { |file| expand file }
-        link_to(@application.root.children, root)
-        @droplet.additional_libraries << tomcat_datasource_jar if tomcat_datasource_jar.exist?
-        @droplet.additional_libraries.link_to web_inf_lib
+         download(@version, @uri) { |file| expand file }
+          if isYaml?
+               wars = []
+               contextpaths = Hash.new
+               wapps=@yamlobj.read_config "webapps", "war"
+                     wapps.each do |wapp|
+                        outputpath = @droplet.root + wapp.artifactname
+                        #if only contextpath available in YAML will be selected for Context tag entry in server.xml
+                        unless wapp.contextpath.nil? 
+                        wapp.artifactname.slice!(".war")
+                        contextpaths[wapp.artifactname]=wapp.contextpath
+                        end
+                        #file download from url with http_header authentication
+                        open(wapp.downloadUrl, http_basic_authentication: [wapp.username, wapp.password]) do 
+                        |file|
+                               File.open(outputpath, "w") do |out|
+                               out.write(file.read)
+                              end
+                              checksum = Digest::SHA1.file(outputpath).hexdigest
+                              if checksum == wapp.sha1
+                                 wars.push Pathname.new(outputpath)
+                               else
+                                 puts "Downloaded check sum #{checksum} got failed for file: #{war.downloadUrl} of repository check sum : #{wapp.sha1}"
+                                 exit 1
+                               end
+                        end
+          end
+        FileUtils.mkdir_p tomcat_webapps
+        link_webapps(wars, tomcat_webapps)
+        #dyanamic context tag will be created under Server.xml 
+        unless contextpaths.nil?
+        context_path_appender contextpaths 
+        end
+        else
+         
+          link_webapps(@application.root.children, tomcat_webapps)
+        end
       end
 
       # (see JavaBuildpack::Component::BaseComponent#release)
@@ -109,7 +148,58 @@ module JavaBuildpack
         @droplet.root + 'WEB-INF/lib'
       end
 
-    end
+      def link_webapps(from, to)
+        webapps = []
+        webapps.push(from.find_all {|p| p.fnmatch('*.war')})
 
+        # Explode zips
+        # TODO: Need to figure out a way to add 'rubyzip' gem to the image
+        #       and avoid shelling out to "unzip".
+        zips = from.find_all {|p| p.fnmatch('*.zip')}
+        zips.each do |zip|
+          IO.popen(['unzip', '-o', '-d', @application.root.to_s, zip.to_s, '*.war']) do |io|
+            io.readlines.each do |line|
+              line.gsub!(/\s*$/, '')
+              next unless line.chomp =~ /\.war$/
+              war = line.split()[-1]
+              webapps.push(Pathname.new(@application.root.to_s) + war)
+            end
+          end
+        end
+        webapps.flatten!
+
+        if (not webapps.empty?)
+          link_to(webapps, to)
+        else
+          link_to(from, root)
+          @droplet.additional_libraries << tomcat_datasource_jar if tomcat_datasource_jar.exist?
+          @droplet.additional_libraries.link_to web_inf_lib
+        end
+      end
+      def isYaml?
+                 @application.root.entries.find_all do |p|
+                   if p.fnmatch?('*.yaml')
+                          return true
+                   end  
+                   
+               end  
+               return false
+         end
+      #using REXML we are adding Context Elements under Host tag in server.xml   
+      def context_path_appender(contextpaths)
+           document = read_xml server_xml
+           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
+           
+            contextpaths.each do | artifactname,contextpath|
+              context = REXML::Element.new('Context')
+              context.add_attribute 'docBase', artifactname
+              context.add_attribute 'reloadable', 'true'
+              context.add_attribute 'path', contextpath
+              host.elements.add(context)
+            end
+                    
+           write_xml server_xml, document
+         end  
+    end
   end
 end
