@@ -7,7 +7,7 @@
 The `java-buildpack` is a [Cloud Foundry][] buildpack for running JVM-based applications.  It is designed to run many JVM-based applications ([Grails][], [Groovy][], Java Main, [Play Framework][], [Spring Boot][], and Servlet) with no additional configuration, but supports configuration of the standard components, and extension to add custom components.
 Also we can push *.zip file which has contain multiple war files. cleartrust-plugin jar will be available in part of buildpack and  will be extracted into tomcat/libs folders. Also Tomcat-Valve config entry will be part of <Host> section in server.xml
 
-currently this buildback has been enhanced  for supporting YAML structure which will have libraries , webapps , repository url , credentials for getting maven application artifacts.
+currently this buildpack has been enhanced  for supporting YAML structure which will have libraries , webapps , repository url , credentials for getting maven application artifacts.
 multple context path mapping also take care.
 
 
@@ -53,7 +53,12 @@ libraries: #specify all libraries as a sequence of GAV Coordinates. These would 
 ###Bind you app with dynatrace service
 ```
  cf bind-service <app-name> dynatrace_hm
+ cf restage <app-name>
 ```
+###JCE support
+For JCE support we created folder structure for oraclejdk inside resources folder where Unlimited JCE jars user can replace as per his need.Currently 
+it is supporting oraclejdk8 JCE jars.
+
 
 ## cf push for YAML steps
 ```
