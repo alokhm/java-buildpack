@@ -52,7 +52,7 @@ libraries: #specify all libraries as a sequence of GAV Coordinates. These would 
 ```
 ###Bind you app with dynatrace service
 
-cf bind-service <app-name> dynatrace_hm
+cf  bind-service  <app-name>  dynatrace_hm
 
 
 ## cf push for YAML steps
