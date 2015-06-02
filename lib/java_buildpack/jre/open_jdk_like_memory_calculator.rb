@@ -19,13 +19,17 @@ require 'java_buildpack/component/versioned_dependency_component'
 require 'java_buildpack/jre'
 require 'java_buildpack/util/qualify_path'
 require 'open3'
-
+require 'java_buildpack/container/tomcat/YamlParser'
 module JavaBuildpack
   module Jre
 
     # Encapsulates the detect, compile, and release functionality for the OpenJDK-like memory calculator
     class OpenJDKLikeMemoryCalculator < JavaBuildpack::Component::VersionedDependencyComponent
       include JavaBuildpack::Util
+      def initialize(context)
+       YamlParser.new(context)
+      end    
+
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
