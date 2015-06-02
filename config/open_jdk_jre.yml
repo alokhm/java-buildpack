@@ -20,12 +20,23 @@ memory_calculator:
   memory_heuristics: 
     heap: 75
     metaspace: 10
+    permgen: 10
     native: 10
     stack: 5
   memory_sizes: 
     metaspace: 64m..
+    permgen: 64m..
   repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"
   version: 1.+
 oraclejdk8: 
   repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
   version: 1.8.0_+
+openjdk7:
+  repository_root: "{default.repository.root}/openjdk/{platform}/{architecture}"
+  version: 1.7.0_+
+openjdk8:   
+  repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
+  version: 1.8.1
+oraclejdk7:
+  repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
+  version: 1.7.0_+
