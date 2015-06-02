@@ -33,6 +33,9 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
+        puts "mem calcultaor"
+        puts @version
+        puts @uri
         download(@version, @uri) do |file|
           FileUtils.mkdir_p memory_calculator.parent
           FileUtils.cp_r(file.path, memory_calculator)
