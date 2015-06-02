@@ -67,7 +67,7 @@ oraclejdk8:
   version: 1.8.0_+
   memory_calculator:
     version: 1.+
-    repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"
+    repository_root: "https://download.run.pivotal.io/memory-calculator/lucid/x86_64"
 jre: 
   memory_heuristics: 
     heap: 75
