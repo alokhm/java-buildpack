@@ -1,4 +1,4 @@
-# Cloud Foundry Java Buildpack + support zip files are having *.war + CT-agent jar support + Shared lib support with YAML upload having maven GAV co-ordinates
+# Cloud Foundry Java Buildpack + support zip files are having *.war + CT-agent jar support + Shared lib support with YAML upload having maven GAV co-ordinates with custom tomcat jdk and jce support
 [![Build Status](https://travis-ci.org/cloudfoundry/java-buildpack.svg?branch=master)](https://travis-ci.org/cloudfoundry/java-buildpack)
 [![Dependency Status](https://gemnasium.com/cloudfoundry/java-buildpack.svg)](https://gemnasium.com/cloudfoundry/java-buildpack)
 [![Code Climate](https://codeclimate.com/repos/5224adaec7f3a3415107004c/badges/bc49f7d7f8dfc47057c8/gpa.svg)](https://codeclimate.com/repos/5224adaec7f3a3415107004c/feed)
@@ -7,8 +7,9 @@
 The `java-buildpack` is a [Cloud Foundry][] buildpack for running JVM-based applications.  It is designed to run many JVM-based applications ([Grails][], [Groovy][], Java Main, [Play Framework][], [Spring Boot][], and Servlet) with no additional configuration, but supports configuration of the standard components, and extension to add custom components.
 Also we can push *.zip file which has contain multiple war files. cleartrust-plugin jar will be available in part of buildpack and  will be extracted into tomcat/libs folders. Also Tomcat-Valve config entry will be part of <Host> section in server.xml
 
-currently this buildback has been enhanced  for supporting YAML structure which will have libraries , webapps , repository url , credentials for getting maven application artifacts.
-multple context path mapping also take care.
+currently this buildback has been enhanced  for supporting YAML structure which will have libraries , webapps , repository url , credentials,for getting maven 	application artifacts.
+multiple context path mapping also take care.
+Added custom tomcat and jdk support with YAML structure.
 
 
 
@@ -17,7 +18,7 @@ cleartrust-plugin jar will be part of buildpack resources/tomcat/lib folder.
 so during compile phase ct agent jar will be extracted into tomcat/lib folders. 
 tomcat valve entry will be part of server.xml entry.
 
-## shared lib - webapps support using YAML file upload. 
+## shared lib - webapps and custom tomcat,jdk support using YAML file upload
 web applications along with supported libraries can be uploaded as YAML format with GAV co-ordinates. below are the sample YAML structure. Also multiple context path
 will be dynamically added to Server.xml as a <Context> entry.
 
@@ -38,8 +39,12 @@ webapps: #specify all wars as a sequence of GAV Coordinates this would go into t
   v: <version>
   context-path: <contextpath>
 - g: <groupId>
-     a:<artifactId>
-     v:<version>
+  a:<artifactId>
+  v:<version>
+  context-path: /abc
+container: #allowed keys for configtomcat[tomcat8,tomcat7,tomcat6] and configjdk[oraclejdk8,oraclejdk7,openjdk8,openkdk7]
+   configtomcat: <tomcatkey>
+   configjdk: <jdkkey>
 ```	
 all the jars and wars will be downloaded and verify SHA checksum for validation. all the jars will be copied over to tomcat/lib and webapps will have all wars.
 
@@ -70,6 +75,13 @@ libraries: #specify all libraries as a sequence of GAV Coordinates. These would 
 ```
 
 
+##Generic support for different jdk , tomcat version with JCE support 
+```
+	This build has now enhanced to support different jdk and tomcat versions enable via config.yml and based on that versions both jdk(open and Oracle) and tomcat will be downloaded.
+Also respective version of JCE security jars will be copied over to jre/security/ folder.	
+ cf p <app-name> -b https://github.com/happiestminds-covisint/java-buildpack.git#custom-jdk-tomcat-jce-enabled -p repo-manifest.zip 
+```
+
 
 ## Usage
 To use this buildpack specify the URI of the repository when pushing an application to Cloud Foundry:
@@ -81,6 +93,7 @@ cf push <APP-NAME> -p <ARTIFACT> -b https://github.com/happiestminds-covisint/ja
 ## Examples
 The following are _very_ simple examples for deploying the artifact types that we support.
 
+* [Embedded web server](docs/example-embedded-web-server.md)
 * [Grails](docs/example-grails.md)
 * [Groovy](docs/example-groovy.md)
 * [Java Main](docs/example-java_main.md)
@@ -89,7 +102,17 @@ The following are _very_ simple examples for deploying the artifact types that w
 * [Spring Boot CLI](docs/example-spring_boot_cli.md)
 
 ## Configuration and Extension
-The buildpack supports configuration and extension through the use of Git repository forking.  The easiest way to accomplish this is to use [GitHub's forking functionality][] to create a copy of this repository.  Make the required configuration and extension changes in the copy of the repository.  Then specify the URL of the new repository when pushing Cloud Foundry applications.  If the modifications are generally applicable to the Cloud Foundry community, please submit a [pull request][] with the changes.
+The buildpack supports extension through the use of Git repository forking. The easiest way to accomplish this is to use [GitHub's forking functionality][] to create a copy of this repository.  Make the required extension changes in the copy of the repository. Then specify the URL of the new repository when pushing Cloud Foundry applications. If the modifications are generally applicable to the Cloud Foundry community, please submit a [pull request][] with the changes.
+
+Buildpack configuration can be overridden with an environment variable matching the configuration file you wish to override minus the `.yml` extension and with a prefix of `JBP_CONFIG`. The value of the variable should be valid inline yaml. For example, to change the default version of Java to 7 and adjust the memory heuristics apply this environment variable to the application.
+
+```cf set-env my-application JBP_CONFIG_OPEN_JDK_JRE '[jre: {version: 1.7.0_+}, memory_calculator: {memory_heuristics: {heap: 85, stack: 10}}]'```
+
+If the key or value contains a special character such as `:` it should be escaped with double quotes. For example, to change the default repository path for the buildpack.
+
+```cf set-env my-application JBP_CONFIG_REPOSITORY '[ default_repository_root: "http://repo.example.io" ]'```
+
+Environment variable can also be specified in the applications `manifest` file. See the [Environment Variables][] documentation for more information.
 
 To learn how to configure various properties of the buildpack, follow the "Configuration" links below. More information on extending the buildpack is available [here](docs/extending.md).
 
@@ -107,7 +130,10 @@ To learn how to configure various properties of the buildpack, follow the "Confi
 	* [Tomcat](docs/container-tomcat.md) ([Configuration](docs/container-tomcat.md#configuration))
 * Standard Frameworks
 	* [AppDynamics Agent](docs/framework-app_dynamics_agent.md) ([Configuration](docs/framework-app_dynamics_agent.md#configuration))
+	* [Introscope Agent](docs/framework-introscope_agent.md) ([Configuration](docs/framework-introscope_agent.md#configuration))
+	* [DynaTrace Agent](docs/framework-dyna_trace_agent.md) ([Configuration](docs/framework-dyna_trace_agent.md#configuration))
 	* [Java Options](docs/framework-java_opts.md) ([Configuration](docs/framework-java_opts.md#configuration))
+	* [JRebel Agent](docs/framework-jrebel_agent.md) ([Configuration](docs/framework-jrebel_agent.md#configuration))
 	* [MariaDB JDBC](docs/framework-maria_db_jdbc.md) ([Configuration](docs/framework-maria_db_jdbc.md#configuration))
 	* [New Relic Agent](docs/framework-new_relic_agent.md) ([Configuration](docs/framework-new_relic_agent.md#configuration))
 	* [Play Framework Auto Reconfiguration](docs/framework-play_framework_auto_reconfiguration.md) ([Configuration](docs/framework-play_framework_auto_reconfiguration.md#configuration))
@@ -213,6 +239,7 @@ This buildpack is released under version 2.0 of the [Apache License][].
 [Cloud Foundry]: http://www.cloudfoundry.com
 [contributor guidelines]: CONTRIBUTING.md
 [disables `remote_downloads`]: docs/extending-caches.md#configuration
+[Environment Variables]: http://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html#env-block
 [GitHub's forking functionality]: https://help.github.com/articles/fork-a-repo
 [Grails]: http://grails.org
 [Groovy]: http://groovy.codehaus.org
