@@ -68,3 +68,16 @@ oraclejdk8:
   memory_calculator:
     version: 1.+
     repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"
+jre: 
+  memory_heuristics: 
+    heap: 75
+    metaspace: 10
+    native: 10
+    stack: 5
+  memory_sizes: 
+    metaspace: 64m..
+  repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
+  version: 1.8.0_+
+  memory_calculator:
+    version: 1.+
+    repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"    
