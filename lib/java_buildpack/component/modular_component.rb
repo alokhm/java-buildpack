@@ -82,7 +82,6 @@ module JavaBuildpack
       def sub_configuration_context(context, key)
         c                 = context.clone
         c[:configuration] = context[:configuration][key]
-        puts c[:configuration]
         c
       end
 
