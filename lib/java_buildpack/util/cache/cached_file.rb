@@ -16,6 +16,8 @@
 
 require 'fileutils'
 require 'java_buildpack/util/cache'
+require 'java_buildpack/util/sanitizer'
+
 
 module JavaBuildpack
   module Util
