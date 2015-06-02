@@ -26,10 +26,7 @@ module JavaBuildpack
     # Encapsulates the detect, compile, and release functionality for the OpenJDK-like memory calculator
     class OpenJDKLikeMemoryCalculator < JavaBuildpack::Component::VersionedDependencyComponent
       include JavaBuildpack::Util
-      def initialize(context)
-       YamlParser.new(context)
-      end    
-
+     
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
