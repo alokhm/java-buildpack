@@ -40,7 +40,7 @@ module JavaBuildpack
         [
           OpenJDKLikeJre.new(sub_configuration_context(context, $configjdk)
                                .merge(component_name: self.class.to_s.space_case)),
-          OpenJDKLikeMemoryCalculator.new(sub_configuration_context(context, 'memory_calculator'))
+          #OpenJDKLikeMemoryCalculator.new(sub_configuration_context(context, 'memory_calculator'))
         ]
       end
 
