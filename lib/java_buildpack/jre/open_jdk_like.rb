@@ -35,7 +35,7 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::ModularComponent#sub_components)
       def sub_components(context)
-        puts "context is #{context}"
+        
 	  YamlParser.new(context)
         [
           OpenJDKLikeJre.new(sub_configuration_context(context, $configjdk)
