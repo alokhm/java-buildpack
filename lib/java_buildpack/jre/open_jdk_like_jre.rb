@@ -47,6 +47,7 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
+        puts "compile@@@@@@@@"
         download_tar
         @droplet.copy_resources
       end
