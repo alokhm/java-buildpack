@@ -26,9 +26,6 @@ openjdk7:
     permgen: 64m..
   repository_root: "{default.repository.root}/openjdk/{platform}/{architecture}"
   version: 1.7.0_+
-  memory_calculator:
-    version: 1.+
-    repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"
 openjdk8: 
   memory_heuristics: 
     heap: 75
@@ -39,9 +36,6 @@ openjdk8:
     metaspace: 64m..
   repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
   version: 1.8.1
-  memory_calculator:
-    version: 1.+
-    repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"
 oraclejdk7: 
   memory_heuristics: 
     heap: 75
@@ -52,9 +46,6 @@ oraclejdk7:
     permgen: 64m..
   repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
   version: 1.7.0_+
-  memory_calculator:
-    version: 1.+
-    repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"
 oraclejdk8: 
   memory_heuristics: 
     heap: 75
@@ -65,19 +56,6 @@ oraclejdk8:
     metaspace: 64m..
   repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
   version: 1.8.0_+
-  memory_calculator:
+memory_calculator:
     version: 1.+
     repository_root: "https://download.run.pivotal.io/memory-calculator/lucid/x86_64"
-jre: 
-  memory_heuristics: 
-    heap: 75
-    metaspace: 10
-    native: 10
-    stack: 5
-  memory_sizes: 
-    metaspace: 64m..
-  repository_root: "https://s3.amazonaws.com/covisintrnd.com-software"
-  version: 1.8.0_+
-  memory_calculator:
-    version: 1.+
-    repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"    
