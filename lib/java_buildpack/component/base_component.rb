@@ -87,8 +87,8 @@ module JavaBuildpack
       # @return [Void]
       def download(version, uri, name = @component_name)
         download_start_time = Time.now
-        #puts uri.to_class
-        #print "-----> Downloading #{name} #{version} from #{uri.sanitize_uri} "
+       
+        print "-----> Downloading #{name} #{version} from #{uri.sanitize_uri} "
 
         JavaBuildpack::Util::Cache::ApplicationCache.new.get(uri) do |file, downloaded|
           puts downloaded ? "(#{(Time.now - download_start_time).duration})" : '(found in cache)'
