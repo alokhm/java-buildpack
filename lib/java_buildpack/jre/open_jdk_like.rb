@@ -54,6 +54,7 @@ module JavaBuildpack
       else
       	$configjdk
       end	  
+    end  
     end
 
   end
