@@ -213,17 +213,19 @@ module JavaBuildpack
         write_xml server_xml, document
       end
       def valve_appender
-        valveclass=ENV["valve"]
-        unless valveclass.nil?
-        document = read_xml server_xml
-        engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
+        valveclass=[]
+        valveclass << ENV["valve1"] << ENV["valve2"]
+        puts valveclass
+        #unless valveclass.nil?
+        #document = read_xml server_xml
+        #engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
         
-          valve = REXML::Element.new('Valve')
-          valve.add_attribute 'className', valveclass
-          engine.insert_before '//Host', valve
+         # valve = REXML::Element.new('Valve')
+          #valve.add_attribute 'className', valveclass
+          #engine.insert_before '//Host', valve
           #engine.elements.add(valve)      
-          write_xml server_xml, document
-        end  
+          #write_xml server_xml, document
+        #end  
       end
       
     end
