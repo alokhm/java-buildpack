@@ -218,8 +218,8 @@ module JavaBuildpack
         document = read_xml server_xml
         host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
           valve = REXML::Element.new('Valve')
-          context.add_attribute 'className', valveclass
-          host.elements.add(context)      
+          valve.add_attribute 'className', valveclass
+          host.elements.add(valve)      
           write_xml server_xml, document
         end  
       end
