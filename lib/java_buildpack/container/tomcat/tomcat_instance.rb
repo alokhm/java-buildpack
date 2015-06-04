@@ -218,7 +218,7 @@ module JavaBuildpack
          document = read_xml server_xml
          engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
           valve = REXML::Element.new('Valve')
-          valve.add_attribute 'className', valveclass
+          valve.add_attribute 'className', ENV["valve"]
           engine.insert_before '//Host', valve
           write_xml server_xml, document
       end
