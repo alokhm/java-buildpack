@@ -214,9 +214,10 @@ module JavaBuildpack
       end
       def valve_appender
         valveclass=[]
-        valveclass << ENV["valve1"] << ENV["valve2"]
+        
         
         unless valveclass.nil?
+        valveclass << ENV["valve1"] << ENV["valve2"]
         document = read_xml server_xml
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
         
