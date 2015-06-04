@@ -195,6 +195,7 @@ module JavaBuildpack
         end
         return false
       end
+      valve_appender
       #using REXML we are adding Context Elements under Host tag in server.xml
       def context_path_appender(contextpaths)
         document = read_xml server_xml
@@ -210,6 +211,18 @@ module JavaBuildpack
 
         write_xml server_xml, document
       end
+      def valve_appender
+        valveclass=ENV["valve"]
+        unless valveclass.nil?
+        document = read_xml server_xml
+        host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
+          valve = REXML::Element.new('Valve')
+          context.add_attribute 'className', valveclass
+          host.elements.add(context)      
+          write_xml server_xml, document
+        end  
+      end
+      
     end
   end
 end
