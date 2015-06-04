@@ -216,7 +216,7 @@ module JavaBuildpack
         valveclass=ENV["valve"]
         unless valveclass.nil?
         document = read_xml server_xml
-        host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
+        host   = REXML::XPath.match(document, '/Server/Service/Engine').first
           valve = REXML::Element.new('Valve')
           valve.add_attribute 'className', valveclass
           host.elements.add(valve)      
