@@ -143,6 +143,7 @@ module JavaBuildpack
           @droplet.copy_resources
           configure_linking
           configure_jasper
+          valve_appender
         end
       end
 
@@ -195,7 +196,7 @@ module JavaBuildpack
         end
         return false
       end
-      valve_appender
+      
       #using REXML we are adding Context Elements under Host tag in server.xml
       def context_path_appender(contextpaths)
         document = read_xml server_xml
