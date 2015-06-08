@@ -1,232 +1,53 @@
-# Cloud Foundry Java Buildpack + support zip files are having *.war + CT-agent jar support + Shared lib support with YAML upload having maven GAV co-ordinates + Dynatrace agent + JCE support
-[![Build Status](https://travis-ci.org/cloudfoundry/java-buildpack.svg?branch=master)](https://travis-ci.org/cloudfoundry/java-buildpack)
-[![Dependency Status](https://gemnasium.com/cloudfoundry/java-buildpack.svg)](https://gemnasium.com/cloudfoundry/java-buildpack)
-[![Code Climate](https://codeclimate.com/repos/5224adaec7f3a3415107004c/badges/bc49f7d7f8dfc47057c8/gpa.svg)](https://codeclimate.com/repos/5224adaec7f3a3415107004c/feed)
-[![Code Climate](https://codeclimate.com/repos/5224adaec7f3a3415107004c/badges/bc49f7d7f8dfc47057c8/coverage.svg)](https://codeclimate.com/repos/5224adaec7f3a3415107004c/feed)
+# Dynatrace Service Broker Deployment and Registration
 
-The `java-buildpack` is a [Cloud Foundry][] buildpack for running JVM-based applications.  It is designed to run many JVM-based applications ([Grails][], [Groovy][], Java Main, [Play Framework][], [Spring Boot][], and Servlet) with no additional configuration, but supports configuration of the standard components, and extension to add custom components.
-Also we can push *.zip file which has contain multiple war files. cleartrust-plugin jar will be available in part of buildpack and  will be extracted into tomcat/libs folders. Also Tomcat-Valve config entry will be part of <Host> section in server.xml
+Java spring boot application has been developed for service-broker which will give profile, server details for dynatrace server and collector which has been used for dynatrace agent to send trace data to them. This service-broker will be registered in cloudfoundry , so that in future we can create a service and from the service bind VCAP_SERVICES values to any application.
 
-currently this buildpack has been enhanced  for supporting YAML structure which will have libraries , webapps , repository url , credentials for getting maven application artifacts.
-multple context path mapping also take care.
+## Steps to deploy and register service broker
 
+## Maven and Java
+The application is Java spring boot application and packaged as a executable JAR file. To build the application user needs maven build tool.
 
+## Deploy service broker application in cloud foundry
+Here our assumption is you have preinstalled CF CLI .To deploy application either user needs manifest file where user will make all required entries or user can directoly push the application by using arguments via CF CLI. If user is not passing buildpack url then default cloud foundary buildpack url will be used
+here
 
-## CT -agent jars Support for Tomcat shard lib. 
-cleartrust-plugin jar will be part of buildpack resources/tomcat/lib folder. 
-so during compile phase ct agent jar will be extracted into tomcat/lib folders. 
-tomcat valve entry will be part of server.xml entry.
-
-## shared lib - webapps support using YAML file upload. 
-web applications along with supported libraries can be uploaded as YAML format with GAV co-ordinates. below are the sample YAML structure. Also multiple context path
-will be dynamically added to Server.xml as a <Context> entry.
-
-```repository:
-  location: <LOCATION>
-  repo-id: <REPOSITORY>
-  authentication:
-    username: <username>
-    password: <password>
-libraries: #specify all libraries as a sequence of GAV Coordinates. These would go in tomcat\lib folder
-- g: <groupId>
-  a: <artifactId>
-  v: <version>
-      
-webapps: #specify all wars as a sequence of GAV Coordinates this would go into tomcat\webapps folder
-- g: <groupId>
-  a: <artifactId>
-  v: <version>
-  context-path: <contextpath>
-- g: <groupId>
-     a:<artifactId>
-     v:<version>
-```	
-all the jars and wars will be downloaded and verify SHA checksum for validation. all the jars will be copied over to tomcat/lib and webapps will have all wars.
-
-###Even shared libs can be (optional). if we want to use libraries as optional then remove the below section from YAML
-```
-libraries: #specify all libraries as a sequence of GAV Coordinates. These would go in tomcat\lib folder
-- g: <groupId>
-  a: <artifactId>
-  v: <version>
-```
-###Bind you app with dynatrace service
-```
- cf bind-service <app-name> dynatrace_hm
- cf restage <app-name>
-```
-###JCE support
-For JCE support we created folder structure for oraclejdk inside resources folder where Unlimited JCE jars user can replace as per his need.Currently 
-it is supporting oraclejdk8 JCE jars.
-
-
-## cf push for YAML steps
-```
-##Following are the steps to push this yaml and test out the buildpack..
-1.	Copy the attached YAML to an empty directory
-2.	With PWD being the directory in 1 do a "cf p <app-name> -b https://github.com/alokhm/java-buildpack.git#recent”
-3.	Your instance should come up with out issue.
-4.	Now go to http://<domain>/check. And you should get a success response.
-5.	Now go to http://<domain>/classes?className=sample.SampleTCValve. And it will tell the sample.SampleTCValve class was found. This class is part of the library that is being pushed using the manifest and it goes into the shared classpath.
-```
-##Notes:
-1.	Passing the manifest using "–p” does not work. Looks like the CF CLI does not support upload of a single file which is not an Archive. I think this might work using the CF rest APIs. Let me know if it does not.. Will find some work around for you.
-2.	Use *.yaml for now. *.yml does not work. Looks like CF CLI strips *.yml files before upload. Should work with the rest API. But stick to *.yaml as that seems to the official extension
-
-##convert YAML file into zip formation and use like below 
-```
- cf p <app-name> -b https://github.com/alokhm/java-buildpack.git#recent -p repo-manifest.zip 
-```
-
-
-
-## Usage
-To use this buildpack specify the URI of the repository when pushing an application to Cloud Foundry:
-
+To deploy run the following commands:
+If user is having manifest file
 ```bash
-cf push <APP-NAME> -p <ARTIFACT> -b https://github.com/alokhm/java-buildpack.git#recent
+$ mvn package
+$ cf push
 ```
-
-## Examples
-The following are _very_ simple examples for deploying the artifact types that we support.
-
-* [Grails](docs/example-grails.md)
-* [Groovy](docs/example-groovy.md)
-* [Java Main](docs/example-java_main.md)
-* [Play Framework](docs/example-play_framework.md)
-* [Servlet](docs/example-servlet.md)
-* [Spring Boot CLI](docs/example-spring_boot_cli.md)
-
-## Configuration and Extension
-The buildpack supports configuration and extension through the use of Git repository forking.  The easiest way to accomplish this is to use [GitHub's forking functionality][] to create a copy of this repository.  Make the required configuration and extension changes in the copy of the repository.  Then specify the URL of the new repository when pushing Cloud Foundry applications.  If the modifications are generally applicable to the Cloud Foundry community, please submit a [pull request][] with the changes.
-
-To learn how to configure various properties of the buildpack, follow the "Configuration" links below. More information on extending the buildpack is available [here](docs/extending.md).
-
-## Additional Documentation
-* [Design](docs/design.md)
-* [Security](docs/security.md)
-* Standard Containers
-	* [Dist ZIP](docs/container-dist_zip.md)
-	* [Groovy](docs/container-groovy.md) ([Configuration](docs/container-groovy.md#configuration))
-	* [Java Main](docs/container-java_main.md) ([Configuration](docs/container-java_main.md#configuration))
-	* [Play Framework](docs/container-play_framework.md)
-	* [Ratpack](docs/container-ratpack.md)
-	* [Spring Boot](docs/container-spring_boot.md)
-	* [Spring Boot CLI](docs/container-spring_boot_cli.md) ([Configuration](docs/container-spring_boot_cli.md#configuration))
-	* [Tomcat](docs/container-tomcat.md) ([Configuration](docs/container-tomcat.md#configuration))
-* Standard Frameworks
-	* [AppDynamics Agent](docs/framework-app_dynamics_agent.md) ([Configuration](docs/framework-app_dynamics_agent.md#configuration))
-	* [Java Options](docs/framework-java_opts.md) ([Configuration](docs/framework-java_opts.md#configuration))
-	* [MariaDB JDBC](docs/framework-maria_db_jdbc.md) ([Configuration](docs/framework-maria_db_jdbc.md#configuration))
-	* [New Relic Agent](docs/framework-new_relic_agent.md) ([Configuration](docs/framework-new_relic_agent.md#configuration))
-	* [Play Framework Auto Reconfiguration](docs/framework-play_framework_auto_reconfiguration.md) ([Configuration](docs/framework-play_framework_auto_reconfiguration.md#configuration))
-	* [Play Framework JPA Plugin](docs/framework-play_framework_jpa_plugin.md) ([Configuration](docs/framework-play_framework_jpa_plugin.md#configuration))
-	* [PostgreSQL JDBC](docs/framework-postgresql_jdbc.md) ([Configuration](docs/framework-postgresql_jdbc.md#configuration))
-	* [Spring Auto Reconfiguration](docs/framework-spring_auto_reconfiguration.md) ([Configuration](docs/framework-spring_auto_reconfiguration.md#configuration))
-	* [Spring Insight](docs/framework-spring_insight.md)
-* Standard JREs
-	* [OpenJDK](docs/jre-open_jdk_jre.md) ([Configuration](docs/jre-open_jdk_jre.md#configuration))
-	* [Oracle](docs/jre-oracle_jre.md) ([Configuration](docs/jre-oracle_jre.md#configuration))
-* [Extending](docs/extending.md)
-	* [Application](docs/extending-application.md)
-	* [Droplet](docs/extending-droplet.md)
-	* [BaseComponent](docs/extending-base_component.md)
-	* [VersionedDependencyComponent](docs/extending-versioned_dependency_component.md)
-	* [ModularComponent](docs/extending-modular_component.md)
-	* [Caches](docs/extending-caches.md) ([Configuration](docs/extending-caches.md#configuration))
-	* [Logging](docs/extending-logging.md) ([Configuration](docs/extending-logging.md#configuration))
-	* [Repositories](docs/extending-repositories.md) ([Configuration](docs/extending-repositories.md#configuration))
-	* [Utilities](docs/extending-utilities.md)
-* [Debugging the Buildpack](docs/debugging-the-buildpack.md)
-* [Buildpack Modes](docs/buildpack-modes.md)
-* Related Projects
-	* [Java Buildpack Dependency Builder](https://github.com/cloudfoundry/java-buildpack-dependency-builder)
-	* [Java Test Applications](https://github.com/cloudfoundry/java-test-applications)
-	* [Java Buildpack System Tests](https://github.com/cloudfoundry/java-buildpack-system-test)
-
-## Building Packages
-The buildpack can be packaged up so that it can be uploaded to Cloud Foundry using the `cf create-buildpack` and `cf update-buildpack` commands.  In order to create these packages, the rake `package` task is used.
-
-### Online Package
-The online package is a version of the buildpack that is as minimal as possible and is configured to connect to the network for all dependencies.  This package is about 50K in size.  To create the online package, run:
-
+If user is passing arguments from CF CLI
 ```bash
-bundle install
-bundle exec rake package
-...
-Creating build/java-buildpack-cfd6b17.zip
+$ mvn package
+$ cf push <app_name> –p <jar_name>
 ```
 
-### Offline Package
-The offline package is a version of the buildpack designed to run without access to a network.  It packages the latest version of each dependency (as configured in the [`config/` directory][]) and [disables `remote_downloads`][]. This package is about 180M in size.  To create the offline package, use the `OFFLINE=true` argument:
-
+## Register Service-broker in cloud foundry 
+To register servicebroker in cloud foundary use following steps:
 ```bash
-bundle install
-bundle exec rake package OFFLINE=true
-...
-Creating build/java-buildpack-offline-cfd6b17.zip
+$ cf create-service-broker <service_broker> <username> <password> <url_for_service_broker>
 ```
 
-### Package Versioning
-Keeping track of different versions of the buildpack can be difficult.  To help with this, the rake `package` task puts a version discriminator in the name of the created package file.  The default value for this discriminator is the current Git hash (e.g. `cfd6b17`).  To change the version when creating a package, use the `VERSION=<VERSION>` argument:
-
+## Marketplace 
+List all services,plans and desription
 ```bash
-bundle install
-bundle exec rake package VERSION=2.1
-...
-Creating build/java-buildpack-2.1.zip
+$ cf marketplace
 ```
-
-## Running Tests
-To run the tests, do the following:
-
+## Create Service from Service broker 
 ```bash
-bundle install
-bundle exec rake
+$ cf create-service <service_broker> <plans> <service_name>
 ```
+Now user can bind any application with this created service.
 
-[Running Cloud Foundry locally][] is useful for privately testing new features.
+## Environment Variables
+Since the application is designed to work in a PaaS environment, all configuration is done with environment variables.  The `server` and `profile` value is the only one that is provided by Dynatrace.  All others are unique to a deployment.
 
-## Running Tests with Vagrant for Zip supported files
-To run the tests, do the following:
-Bring up the vagrant virtual machine and ssh into it.
+| Key | Description
+| --- | -----------
+| `server` | The Dynatrace server ip with portnumber to provide to all applications.  
+| `profile` | The profile that can used for mentioning agent-name during setting java agent path.  This can be any value.
 
-```bash
-vagrant up
-vagrant ssh
-```
 
-Run the `detect`, `compile` and `release` commands within the vagrant machine.
-
-```bash
-cd /vagrant/<directory-containing-war-or-zip-files>
-
-/vagrant/vagrant/run/detect
-/vagrant/vagrant/run/compile
-/vagrant/vagrant/run/release
-```
-
-Connect to the Tomcat instance on port 12345 on your local machine.
-
-[http://localhost:12345](http://localhost:12345)
-
-	
-## Contributing
-[Pull requests][] are welcome; see the [contributor guidelines][] for details.
-
-## License
-This buildpack is released under version 2.0 of the [Apache License][].
-
-[`config/` directory]: config
-[Apache License]: http://www.apache.org/licenses/LICENSE-2.0
-[Cloud Foundry]: http://www.cloudfoundry.com
-[contributor guidelines]: CONTRIBUTING.md
-[disables `remote_downloads`]: docs/extending-caches.md#configuration
-[GitHub's forking functionality]: https://help.github.com/articles/fork-a-repo
-[Grails]: http://grails.org
-[Groovy]: http://groovy.codehaus.org
-[Play Framework]: http://www.playframework.com
-[pull request]: https://help.github.com/articles/using-pull-requests
-[Pull requests]: http://help.github.com/send-pull-requests
-[Running Cloud Foundry locally]: http://docs.cloudfoundry.org/deploying/run-local.html
-[Spring Boot]: http://projects.spring.io/spring-boot/
+## Model Notes
+The model is for the REST/Controller level. It can be extended as needed.

@@ -1,6 +1,11 @@
+.idea/libraries
 .idea/tasks.xml
 .idea/workspace.xml
-.yardoc
-build/
-coverage
-doc
+.settings
+.project
+.classpath
+.springBeans
+settings.gradle
+.gradle
+target
+build
