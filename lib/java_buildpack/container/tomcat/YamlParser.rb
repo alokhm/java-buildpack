@@ -40,7 +40,7 @@ class YamlParser < JavaBuildpack::Component::BaseComponent
                               @repopath = "&r=#{@repoid}"
                               @webapps = @config['webapps']
                               @libraries=@config['libraries'] 
-                              unless $value.nil?
+                              unless @config['value'].nil?
                               $value=@config['value']
                               end
                               unless @libraries.nil?
