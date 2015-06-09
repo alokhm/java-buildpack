@@ -216,7 +216,7 @@ module JavaBuildpack
       end
       def valve_appender
         valveclass=[]
-        valveclass << $value
+        valveclass << $value[0]
         document = read_xml server_xml
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
         valveclass.each do |valvevalue|
