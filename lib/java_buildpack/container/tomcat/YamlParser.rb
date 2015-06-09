@@ -39,7 +39,8 @@ class YamlParser < JavaBuildpack::Component::BaseComponent
                               @contenturl= "http://#{@location}/service/local/artifact/maven/content?"
                               @repopath = "&r=#{@repoid}"
                               @webapps = @config['webapps']
-                              @libraries=@config['libraries']  
+                              @libraries=@config['libraries'] 
+                              $value=@config['value']
                               unless @libraries.nil?
                                 @libraries.each do|lib|
                                     ['g', 'a', 'v'].each {|key| abort "Invalid YAML format in libraries" unless !lib.is_a?(String) && lib.has_key?(key)} 
