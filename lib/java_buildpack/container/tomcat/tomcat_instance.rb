@@ -220,7 +220,7 @@ module JavaBuildpack
         #valveclass << ENV["valve1"] << ENV["valve2"]
         valveclass1= ENV['valve']
         #puts valveclass
-        valveclass=valveclass1.gsub(/[{]/, '{"').gsub(/[]]/, '"]').gsub(/[,]/,'","').delete("[").gsub(/[:]/, '":["')
+        valveclass=valveclass1.gsub(/[{]/, '{"').gsub(/[\]]/, '"]').gsub(/[,]/,'","').delete("[").gsub(/[:]/, '":["')
         obj=JSON.parse(valveclass)
         #puts obj
         document = read_xml server_xml
