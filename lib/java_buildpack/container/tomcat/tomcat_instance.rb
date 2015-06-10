@@ -143,7 +143,7 @@ module JavaBuildpack
           @droplet.copy_resources
           configure_linking
           configure_jasper
-           unless ENV["valve1"].nil? && ENV["valve2"].nil?
+           unless ENV["valve-entry"].nil?
           valve_appender
         end
         end
@@ -215,16 +215,18 @@ module JavaBuildpack
         write_xml server_xml, document
       end
       def valve_appender
-        valveclass=[]
-        valveclass << ENV["valve1"] << ENV["valve2"]
-        document = read_xml server_xml
-        engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
-        valveclass.each do |valvevalue|
-        valve = REXML::Element.new('Valve')
-        valve.add_attribute 'className', valvevalue
-        engine.insert_before '//Host', valve
-      end
-        write_xml server_xml, document
+        #valveclass=[]
+        #valveclass << ENV["valve1"] << ENV["valve2"]
+        valveclass= ENV['valve-entry']
+        puts valveclass
+        #document = read_xml server_xml
+        #engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
+        #valveclass.each do |valvevalue|
+        #valve = REXML::Element.new('Valve')
+        #valve.add_attribute 'className', valvevalue
+        #engine.insert_before '//Host', valve
+      #end
+        #write_xml server_xml, document
       end
       
     end
