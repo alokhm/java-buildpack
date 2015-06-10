@@ -220,7 +220,7 @@ module JavaBuildpack
         #valveclass << ENV["valve1"] << ENV["valve2"]
         valveclass= ENV['valve']
         puts valveclass
-        obj=JSON.parse(valveclass)
+        obj=JSON.parse(valveclass.to_json)
         puts obj
         #document = read_xml server_xml
         #engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
