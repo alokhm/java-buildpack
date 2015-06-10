@@ -225,7 +225,7 @@ module JavaBuildpack
         #puts obj
         document = read_xml server_xml
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
-         obj['valve'].each do |valvevalue|
+         obj['value'].each do |valvevalue|
          valve = REXML::Element.new('Valve')
          valve.add_attribute 'className', valvevalue
          engine.insert_before '//Host', valve
