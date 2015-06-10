@@ -218,18 +218,19 @@ module JavaBuildpack
       def valve_appender
         #valveclass=[]
         #valveclass << ENV["valve1"] << ENV["valve2"]
-        valveclass= ENV['valve']
-        puts valveclass
-        #obj=JSON.parse(valveclass)
+        valveclass1= ENV['valve']
+        #puts valveclass
+        valveclass=valveclass1.gsub(/[{]/, '{"').gsub(/[]]/, '"]').gsub(/[,]/,'","').delete("[").gsub(/[:]/, '":["')
+        obj=JSON.parse(valveclass)
         #puts obj
-        #document = read_xml server_xml
-        #engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
-        #valveclass.each do |valvevalue|
-        #valve = REXML::Element.new('Valve')
-        #valve.add_attribute 'className', valvevalue
-        #engine.insert_before '//Host', valve
-      #end
-        #write_xml server_xml, document
+        document = read_xml server_xml
+        engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
+         obj['valve'].each do |valvevalue|
+         valve = REXML::Element.new('Valve')
+         valve.add_attribute 'className', valvevalue
+         engine.insert_before '//Host', valve
+       end
+         write_xml server_xml, document
       end
       
     end
