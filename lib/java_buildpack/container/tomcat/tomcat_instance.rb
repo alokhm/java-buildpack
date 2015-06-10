@@ -216,13 +216,8 @@ module JavaBuildpack
         write_xml server_xml, document
       end
       def valve_appender
-        #valveclass=[]
-        #valveclass << ENV["valve1"] << ENV["valve2"]
-        valveclass1= ENV['valve']
-        #puts valveclass
-        valveclass=valveclass1.gsub(/[{]/, '{"').gsub(/[\]]/, '"]').gsub(/[,]/,'","').delete("[").gsub(/[:]/, '":["')
+        valveclass= ENV['valve']
         obj=JSON.parse(valveclass)
-        #puts obj
         document = read_xml server_xml
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
          obj['value'].each do |valvevalue|
