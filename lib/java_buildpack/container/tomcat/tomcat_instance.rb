@@ -23,6 +23,7 @@ require 'java_buildpack/container/tomcat/YamlParser'
 require 'open-uri'
 require 'pathname'
 require 'digest/sha1'
+require 'json'
 
 module JavaBuildpack
   module Container
@@ -219,6 +220,8 @@ module JavaBuildpack
         #valveclass << ENV["valve1"] << ENV["valve2"]
         valveclass= ENV['valve']
         puts valveclass
+        obj=JSON.parse(valveclass)
+        puts obj
         #document = read_xml server_xml
         #engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
         #valveclass.each do |valvevalue|
