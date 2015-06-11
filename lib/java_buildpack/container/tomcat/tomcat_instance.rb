@@ -227,11 +227,13 @@ module JavaBuildpack
         end
         document = read_xml server_xml
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
+         if obj.has_key?("value")
          obj['value'].each do |valvevalue|
          valve = REXML::Element.new('Valve')
          valve.add_attribute 'className', valvevalue
          engine.insert_before '//Host', valve
        end
+      end 
          write_xml server_xml, document
       end
       
