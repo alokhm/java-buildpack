@@ -144,9 +144,11 @@ module JavaBuildpack
           @droplet.copy_resources
           configure_linking
           configure_jasper
-           unless ENV['valve'].nil?
+           unless ENV.has_key?("valve")
+           unless ENV['valve'].nil? && ENV['valve'].empty?
           valve_appender
         end
+      end
         end
       end
 
