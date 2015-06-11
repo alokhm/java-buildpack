@@ -68,13 +68,13 @@ describe JavaBuildpack::Framework::JavaOpts do
 
   context do
     let(:configuration) do
-      { 'java_opts' => '-Dtest=!Â£$%^&*(){}<>[];~`' }
+      { 'java_opts' => '-Dtest=!£$%^&*(){}<>[];~`' }
     end
 
     it 'escapes special characters' do
       component.release
 
-      expect(java_opts).to include('-Dtest=\\!\\Â£\\$\\%\\^\\&\\*\\(\\)\\{\\}\\<\\>\\[\\]\\;\\~\\`')
+      expect(java_opts).to include('-Dtest=\\!\\£\\$\\%\\^\\&\\*\\(\\)\\{\\}\\<\\>\\[\\]\\;\\~\\`')
     end
   end
 

@@ -1,6 +1,6 @@
 # Encoding: utf-8
 # Cloud Foundry Java Buildpack
-# Copyright 2013 the original author or authors.
+# Copyright 2013-2015 the original author or authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ require 'java_buildpack/container/tomcat/YamlParser'
 require 'open-uri'
 require 'pathname'
 require 'digest/sha1'
-require 'json'
 
 module JavaBuildpack
   module Container
@@ -36,59 +35,55 @@ module JavaBuildpack
       #
       # @param [Hash] context a collection of utilities used the component
       def initialize(context)
-
         super(context) { |candidate_version| candidate_version.check_size(3) }
         @yamlobj=YamlParser.new(context)
-      end
+       end
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
-        download(@version, @uri) { |file| expand file }
-        if isYaml?
-          wars = []
-          contextpaths = Hash.new
-          wapps=@yamlobj.read_config "webapps", "war"
-          wapps.each do |wapp|
-
-            unless wapp.contextpath.nil?
-              wapp.contextpath.strip!
-              warFilename = (wapp.contextpath == "/") ? "/ROOT" : wapp.contextpath
-              warFilename.slice! "/"
-            end
-
-            warFilename =  warFilename.nil? ?  wapp.artifactname : "#{warFilename}.war"
-
-            outputpath = @droplet.root + warFilename
-            #if only contextpath available in YAML will be selected for Context tag entry in server.xml
-            unless wapp.contextpath.nil?
-              wapp.artifactname.slice!(".war")
-              contextpaths[wapp.artifactname]=wapp.contextpath
-            end
-            #file download from url with http_header authentication
-            open(wapp.downloadUrl, http_basic_authentication: [wapp.username, wapp.password]) do
-              |file|
-              File.open(outputpath, "w") do |out|
-                out.write(file.read)
-              end
-              checksum = Digest::SHA1.file(outputpath).hexdigest
-              if checksum == wapp.sha1
-                wars.push Pathname.new(outputpath)
-              else
-                puts "Downloaded check sum #{checksum} got failed for file: #{war.downloadUrl} of repository check sum : #{wapp.sha1}"
-                exit 1
-              end
-            end
+         download(@version, @uri) { |file| expand file }
+          if isYaml?
+               wars = []
+               contextpaths = Hash.new
+               wapps=@yamlobj.read_config "webapps", "war"
+                     wapps.each do |wapp|
+                        unless wapp.contextpath.nil?
+                            wapp.contextpath.strip!
+                            warFilename = (wapp.contextpath == "/") ? "/ROOT" : wapp.contextpath
+                            warFilename.slice! "/"
+                        end
+                        warFilename =  warFilename.nil? ?  wapp.artifactname : "#{warFilename}.war"
+                        outputpath = @droplet.root + warFilename
+                        #if only contextpath available in YAML will be selected for Context tag entry in server.xml
+                        unless wapp.contextpath.nil? 
+                        wapp.artifactname.slice!(".war")
+                        contextpaths[wapp.artifactname]=wapp.contextpath
+                        end
+                        #file download from url with http_header authentication
+                        open(wapp.downloadUrl, http_basic_authentication: [wapp.username, wapp.password]) do 
+                        |file|
+                               File.open(outputpath, "w") do |out|
+                               out.write(file.read)
+                              end
+                              checksum = Digest::SHA1.file(outputpath).hexdigest
+                              if checksum == wapp.sha1
+                                 wars.push Pathname.new(outputpath)
+                               else
+                                 puts "Downloaded check sum #{checksum} got failed for file: #{war.downloadUrl} of repository check sum : #{wapp.sha1}"
+                                 exit 1
+                               end
+                        end
           end
-          FileUtils.mkdir_p tomcat_webapps
-          link_webapps(wars, tomcat_webapps)
-          #dyanamic context tag will be created under Server.xml
-          # Commenting this out temporarily. Till a better solution is found
-          #unless contextpaths.nil?
-          #context_path_appender contextpaths
-          #end
+        FileUtils.mkdir_p tomcat_webapps
+        link_webapps(wars, tomcat_webapps)
+        #dyanamic context tag will be created under Server.xml 
+        # Commenting this out temporarily. Till a better solution is found
+        #unless contextpaths.nil?
+        #context_path_appender contextpaths
+        #end
         else
-
-          link_webapps(@application.root.children, root)
+         
+          link_webapps(@application.root.children, tomcat_webapps)
         end
       end
 
@@ -144,11 +139,6 @@ module JavaBuildpack
           @droplet.copy_resources
           configure_linking
           configure_jasper
-           if ENV.has_key?("valve")
-           unless ENV['valve'].nil? && ENV['valve'].empty?
-          valve_appender
-        end
-      end
         end
       end
 
@@ -193,50 +183,29 @@ module JavaBuildpack
         end
       end
       def isYaml?
-        @application.root.entries.find_all do |p|
-          if p.fnmatch?('*.yaml')
-            return true
-          end
-
-        end
-        return false
-      end
-      
-      #using REXML we are adding Context Elements under Host tag in server.xml
+                 @application.root.entries.find_all do |p|
+                   if p.fnmatch?('*.yaml')
+                          return true
+                   end  
+                   
+               end  
+               return false
+         end
+      #using REXML we are adding Context Elements under Host tag in server.xml   
       def context_path_appender(contextpaths)
-        document = read_xml server_xml
-        host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
-
-        contextpaths.each do | artifactname,contextpath|
-          context = REXML::Element.new('Context')
-          context.add_attribute 'docBase', artifactname
-          context.add_attribute 'reloadable', 'true'
-          context.add_attribute 'path', contextpath
-          host.elements.add(context)
-        end
-
-        write_xml server_xml, document
-      end
-      def valve_appender
-        valveclass= ENV['valve']
-        begin
-            obj=JSON.parse(valveclass)
-         rescue JSON::ParserError => e
-         puts "NOT A VALID JSON FORMAT"
-         return false
-        end
-        document = read_xml server_xml
-        engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
-         if obj.has_key?("value")
-         obj['value'].each do |valvevalue|
-         valve = REXML::Element.new('Valve')
-         valve.add_attribute 'className', valvevalue
-         engine.insert_before '//Host', valve
-       end
-      end 
-         write_xml server_xml, document
-      end
-      
+           document = read_xml server_xml
+           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
+           
+            contextpaths.each do | artifactname,contextpath|
+              context = REXML::Element.new('Context')
+              context.add_attribute 'docBase', artifactname
+              context.add_attribute 'reloadable', 'true'
+              context.add_attribute 'path', contextpath
+              host.elements.add(context)
+            end
+                    
+           write_xml server_xml, document
+         end  
     end
   end
 end

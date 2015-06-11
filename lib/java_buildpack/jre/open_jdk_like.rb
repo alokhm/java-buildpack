@@ -18,6 +18,7 @@ require 'java_buildpack/component/modular_component'
 require 'java_buildpack/jre'
 require 'java_buildpack/jre/open_jdk_like_jre'
 require 'java_buildpack/jre/open_jdk_like_memory_calculator'
+require 'java_buildpack/container/tomcat/YamlParser'
 
 module JavaBuildpack
   module Jre
@@ -34,8 +35,9 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::ModularComponent#sub_components)
       def sub_components(context)
+     	  YamlParser.new(context)
         [
-          OpenJDKLikeJre.new(sub_configuration_context(context, 'jre')
+          OpenJDKLikeJre.new(sub_configuration_context(context, jdkkey)
                                .merge(component_name: self.class.to_s.space_case)),
           OpenJDKLikeMemoryCalculator.new(sub_configuration_context(context, 'memory_calculator'))
         ]
@@ -44,6 +46,14 @@ module JavaBuildpack
       # (see JavaBuildpack::Component::ModularComponent#supports?)
       def supports?
         true
+      end
+      #this functionality to make sure always jdk values should not be empty.
+      def jdkkey
+		if $configjdk.nil?
+			$configjdk='openjdk8'
+		else
+			$configjdk
+		end
       end
 
     end
