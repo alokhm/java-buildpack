@@ -217,7 +217,12 @@ module JavaBuildpack
       end
       def valve_appender
         valveclass= ENV['valve']
-        obj=JSON.parse(valveclass)
+        begin
+            obj=JSON.parse(valveclass)
+         rescue JSON::ParserError => e
+         puts json is not in valid format
+        end
+        #obj=JSON.parse(valveclass)
         document = read_xml server_xml
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
          obj['value'].each do |valvevalue|
