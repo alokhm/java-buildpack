@@ -222,10 +222,9 @@ module JavaBuildpack
         begin
             obj=JSON.parse(valveclass)
          rescue JSON::ParserError => e
-         puts "json is not in valid format"
+         puts "NOT A VALID JSON FORMAT"
          return false
         end
-        #obj=JSON.parse(valveclass)
         document = read_xml server_xml
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/').first
          obj['value'].each do |valvevalue|
