@@ -221,6 +221,7 @@ module JavaBuildpack
             obj=JSON.parse(valveclass)
          rescue JSON::ParserError => e
          puts "json is not in valid format"
+         return false
         end
         #obj=JSON.parse(valveclass)
         document = read_xml server_xml
