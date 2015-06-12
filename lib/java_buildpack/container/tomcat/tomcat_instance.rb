@@ -226,11 +226,11 @@ module JavaBuildpack
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
          if obj.has_key?("value")
          obj['value'].each do  |valvevalue|
+        unless valvevalue.empty?  
          valve = REXML::Element.new('Valve')
-         unless valvevalue.empty?
          valve.add_attribute 'className', valvevalue
-         end
          engine.elements.add(valve)
+       end
             end
          end 
          write_xml server_xml, document
