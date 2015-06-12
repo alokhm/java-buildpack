@@ -142,10 +142,10 @@ module JavaBuildpack
           configure_linking
           configure_jasper
           if ENV.has_key?("valve")
-           unless ENV['valve'].nil? && ENV['valve'].empty?
+          unless ENV['valve'].nil? && ENV['valve'].empty?
           valve_appender
-        end
-      end
+          end
+          end
         end
       end
 
@@ -197,7 +197,7 @@ module JavaBuildpack
                    
                end  
                return false
-         end
+      end
       #using REXML we are adding Context Elements under Host tag in server.xml   
       def context_path_appender(contextpaths)
            document = read_xml server_xml
@@ -212,16 +212,16 @@ module JavaBuildpack
             end
                     
            write_xml server_xml, document
-         end 
+      end 
       
        def valve_appender
-        valveclass= ENV['valve']
+          valveclass= ENV['valve']
         begin
-            obj=JSON.parse(valveclass)
+          obj=JSON.parse(valveclass)
         rescue JSON::ParserError => e
          puts "NOT A VALID JSON FORMAT"
-         return false
-         end
+        return false
+        end
         document = read_xml server_xml
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
          if obj.has_key?("value")
@@ -229,10 +229,10 @@ module JavaBuildpack
          valve = REXML::Element.new('Valve')
          valve.add_attribute 'className', valvevalue
          engine.elements.add(valve)
-       end
-      end 
+        end
+        end 
          write_xml server_xml, document
-      end
+       end
          
          
     end
