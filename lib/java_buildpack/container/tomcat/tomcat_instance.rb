@@ -220,7 +220,7 @@ module JavaBuildpack
            obj=JSON.parse(valveclass)
           rescue JSON::ParserError => e
            puts "NOT A VALID JSON FORMAT"
-           return false
+           #return false
           end
           document = read_xml server_xml
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
