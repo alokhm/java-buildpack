@@ -213,27 +213,27 @@ module JavaBuildpack
                     
            write_xml server_xml, document
       end 
-      
+      #using REXML we are adding Valve Elements under Host tag in server.xml 
        def valve_appender
           valveclass= ENV['valve']
-        begin
-          obj=JSON.parse(valveclass)
-        rescue JSON::ParserError => e
-         puts "NOT A VALID JSON FORMAT"
-        return false
-        end
-        document = read_xml server_xml
-        host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
-         if obj.has_key?("value")
-         obj['value'].each do  |valvevalue|
-        unless valvevalue.empty?  
-         valve = REXML::Element.new('Valve')
-         valve.add_attribute 'className', valvevalue
-         host.elements.add(valve)
+          begin
+           obj=JSON.parse(valveclass)
+          rescue JSON::ParserError => e
+           puts "NOT A VALID JSON FORMAT"
+           return false
           end
-        end
-         end 
-         write_xml server_xml, document
+          document = read_xml server_xml
+          host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
+          if obj.has_key?("value")
+           obj['value'].each do  |valvevalue|
+             unless valvevalue.empty?  
+              valve = REXML::Element.new('Valve')
+              valve.add_attribute 'className', valvevalue
+              host.elements.add(valve)
+             end
+           end
+          end 
+          write_xml server_xml, document
        end
          
          
