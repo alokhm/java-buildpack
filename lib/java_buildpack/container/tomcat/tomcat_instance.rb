@@ -39,7 +39,7 @@ module JavaBuildpack
       def initialize(context)
         super(context) { |candidate_version| candidate_version.check_size(3) }
         @yamlobj=YamlParser.new(context)
-       end
+      end
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
@@ -225,12 +225,12 @@ module JavaBuildpack
         document = read_xml server_xml
         engine   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
          if obj.has_key?("value")
-         obj['value'].each do |valvevalue|
+         obj['value'].each do  |valvevalue|
          valve = REXML::Element.new('Valve')
          valve.add_attribute 'className', valvevalue
          engine.elements.add(valve)
-        end
-        end 
+            end
+         end 
          write_xml server_xml, document
        end
          
