@@ -227,7 +227,9 @@ module JavaBuildpack
          if obj.has_key?("value")
          obj['value'].each do  |valvevalue|
          valve = REXML::Element.new('Valve')
+         unless valvevalue.empty?
          valve.add_attribute 'className', valvevalue
+         end
          engine.elements.add(valve)
             end
          end 
