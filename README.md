@@ -1,4 +1,4 @@
-# Cloud Foundry Java Buildpack + support zip files are having *.war + CT-agent jar support + Shared lib support with YAML upload having maven GAV co-ordinates with custom tomcat jdk and jce support
+# Cloud Foundry Java Buildpack + support zip files are having *.war + CT-agent jar support + Shared lib support with YAML upload having maven GAV co-ordinates with custom tomcat jdk and jce and Valve support
 [![Build Status](https://travis-ci.org/cloudfoundry/java-buildpack.svg?branch=master)](https://travis-ci.org/cloudfoundry/java-buildpack)
 [![Dependency Status](https://gemnasium.com/cloudfoundry/java-buildpack.svg)](https://gemnasium.com/cloudfoundry/java-buildpack)
 [![Code Climate](https://codeclimate.com/repos/5224adaec7f3a3415107004c/badges/bc49f7d7f8dfc47057c8/gpa.svg)](https://codeclimate.com/repos/5224adaec7f3a3415107004c/feed)
@@ -74,7 +74,10 @@ libraries: #specify all libraries as a sequence of GAV Coordinates. These would 
 Also respective version of JCE security jars will be copied over to jre/security/ folder.	
  cf p <app-name> -b https://github.com/happiestminds-covisint/java-buildpack.git#custom-jdk-tomcat-jce-enabled -p repo-manifest.zip 
 ```
-
+##Support for Valves
+```
+	This build has now enhanced to support different valves which user will set through environment variables.These environment variable user can set with manifest file or through CF cli.Before setting these valves user has to give G,A,V coordinates of jars so that it will download and available under tomcat/lib folder.If user is not providing G,A,V coordinates then user needs to put these jars into tomcat/lib folder.	
+```
 
 ## Usage
 To use this buildpack specify the URI of the repository when pushing an application to Cloud Foundry:
