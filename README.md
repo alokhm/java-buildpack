@@ -89,20 +89,6 @@ valve
         ]
  }
 
-1)cf cli
-cf set-env <APP-NAME> valve {\"value\":[\"valve1\",\"valve2\"]}
-
-2)Using manifest file under env section user need to put JSON
-env:
-    valve: |-
-      {
-        "value":[
-          "valve1",
-          "valve2"
-        ]
-      }
-
- 
 ## Usage
 To use this buildpack specify the URI of the repository when pushing an application to Cloud Foundry:
 
