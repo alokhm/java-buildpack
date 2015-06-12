@@ -75,9 +75,9 @@ Also respective version of JCE security jars will be copied over to jre/security
  cf p <app-name> -b https://github.com/happiestminds-covisint/java-buildpack.git#custom-jdk-tomcat-jce-enabled -p repo-manifest.zip 
 ```
 ##Support for Valves
-```
-	This build has now enhanced to support different valves which user will set through environment variables.These environment variable user can set with manifest file or through CF cli.Before setting these valves user has to give G,A,V coordinates of jars so that it will download and available under tomcat/lib folder.If user is not providing G,A,V coordinates then user needs to put these jars into tomcat/lib folder.	
-```
+
+This build has now enhanced to support different valves which user will set through environment variables.These environment variable user can set with manifest file or through CF cli.Before setting these valves user has to give G,A,V coordinates of jars so that it will download and available under tomcat/lib folder.If user is not providing G,A,V coordinates then user needs to put these jars into tomcat/lib folder.	
+
 
 ## Usage
 To use this buildpack specify the URI of the repository when pushing an application to Cloud Foundry:
