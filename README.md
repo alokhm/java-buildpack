@@ -78,7 +78,31 @@ Also respective version of JCE security jars will be copied over to jre/security
 
 This build has now enhanced to support different valves which user will set through environment variables.These environment variable user can set with manifest file or through CF cli.Before setting these valves user has to give G,A,V coordinates of jars so that it will download and available under tomcat/lib folder.If user is not providing G,A,V coordinates then user needs to put these jars into tomcat/lib folder.	
 
+##Setting of Environment variable for Valves
+Valves which users are setting here are in JSON format-
+valve and value are fixed.it behaves as key here.
+valve
+{
+        "value":[
+          "valve1",
+          "valve2"
+        ]
+ }
 
+1)cf cli
+cf set-env <APP-NAME> valve {\"value\":[\"valve1\",\"valve2\"]}
+
+2)Using manifest file under env section user need to put JSON
+env:
+    valve: |-
+      {
+        "value":[
+          "valve1",
+          "valve2"
+        ]
+      }
+
+ 
 ## Usage
 To use this buildpack specify the URI of the repository when pushing an application to Cloud Foundry:
 
