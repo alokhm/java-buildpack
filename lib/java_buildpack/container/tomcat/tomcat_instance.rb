@@ -224,15 +224,23 @@ module JavaBuildpack
           end
           document = read_xml server_xml
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
-          if obj.has_key?("value")
-           obj['value'].each do  |valvevalue|
-             unless valvevalue.empty?  
-              valve = REXML::Element.new('Valve')
-              valve.add_attribute 'className', valvevalue
-              host.elements.add(valve)
-             end
-           end
-          end 
+          if obj.has_key?("valve")
+           
+           for i in 0..obj['valve'].length-1
+  
+  className=obj['valve'][i]['className']
+  alwaysUseSession=obj['valve'][i]['alwaysUseSession']
+  changeSessionId=obj['valve'][i]['changeSessionId'] 
+  valve = REXML::Element.new('Valve')
+  valve.add_attribute 'className', className
+  valve.add_attribute 'alwaysUseSession', alwaysUseSession
+  valve.add_attribute 'changeSessionId', changeSessionId
+  host.elements.add(valve)
+  
+end
+
+           
+           
           write_xml server_xml, document
        end
          
