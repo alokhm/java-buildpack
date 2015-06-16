@@ -229,11 +229,11 @@ module JavaBuildpack
            for i in 0..obj['valve'].length-1
             className=obj['valve'][i]['className']
             alwaysUseSession=obj['valve'][i]['alwaysUseSession']
-            changeSessionId=obj['valve'][i]['changeSessionId'] 
+            changeSessionIdOnAuthentication=obj['valve'][i]['changeSessionIdOnAuthentication'] 
             valve = REXML::Element.new('Valve')
             valve.add_attribute 'className', className
             valve.add_attribute 'alwaysUseSession', alwaysUseSession
-            valve.add_attribute 'changeSessionId', changeSessionId
+            valve.add_attribute 'changeSessionIdOnAuthentication', changeSessionIdOnAuthentication
             host.elements.add(valve)
           end
         end  
