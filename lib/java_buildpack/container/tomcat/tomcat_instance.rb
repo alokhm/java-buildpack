@@ -228,12 +228,12 @@ module JavaBuildpack
            
            for i in 0..obj['valve'].length-1
             
-            obj['valve'][i].each do |key, array|
-              puts key
-              puts array
-            #valve = REXML::Element.new('Valve')  
-            #valve.add_attribute  key, array
-           # host.elements.add(valve)
+            obj['valve'][0].each do |key, array|
+              #puts key
+             #puts array
+            valve = REXML::Element.new('Valve')  
+            valve.add_attribute  key, array
+            host.elements.add(valve)
           end
           end
         end  
