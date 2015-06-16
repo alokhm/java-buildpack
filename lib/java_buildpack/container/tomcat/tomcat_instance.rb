@@ -237,7 +237,7 @@ module JavaBuildpack
           end
           end
         end  
-          #write_xml server_xml, document
+          write_xml server_xml, document
        end
          
          
