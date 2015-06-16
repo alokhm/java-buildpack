@@ -227,14 +227,11 @@ module JavaBuildpack
           if obj.has_key?("valve")
            
            for i in 0..obj['valve'].length-1
-            className=obj['valve'][i]['className']
-            alwaysUseSession=obj['valve'][i]['alwaysUseSession']
-            changeSessionIdOnAuthentication=obj['valve'][i]['changeSessionIdOnAuthentication'] 
+            obj['valve'][i].each do |key, array|
             valve = REXML::Element.new('Valve')
-            valve.add_attribute 'className', className
-            valve.add_attribute 'alwaysUseSession', alwaysUseSession
-            valve.add_attribute 'changeSessionIdOnAuthentication', changeSessionIdOnAuthentication
+            valve.add_attribute '#{key}', array
             host.elements.add(valve)
+          end
           end
         end  
           write_xml server_xml, document
