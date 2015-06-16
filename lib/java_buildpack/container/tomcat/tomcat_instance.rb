@@ -230,7 +230,7 @@ module JavaBuildpack
             
             obj['valve'][i].each do |key, array|
             valve = REXML::Element.new('Valve')  
-            valve.add_attribute 'className', array
+            valve.add_attribute  key, array
             host.elements.add(valve)
           end
           end
