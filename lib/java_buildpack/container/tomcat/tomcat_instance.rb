@@ -234,6 +234,7 @@ module JavaBuildpack
             valve = REXML::Element.new('Valve')  
             valve.add_attribute  key, array
             valve.add_attribute  key, array
+            valve.add_attribute  key, array
             host.elements.add(valve)
           end
           end
