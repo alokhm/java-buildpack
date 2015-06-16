@@ -227,9 +227,10 @@ module JavaBuildpack
           if obj.has_key?("valve")
            
            for i in 0..obj['valve'].length-1
-            valve = REXML::Element.new('Valve')
+            
             obj['valve'][i].each do |key, array|
-            valve.add_attribute '#{key}', array
+            valve = REXML::Element.new('Valve')  
+            valve.add_attribute 'className', array
             host.elements.add(valve)
           end
           end
