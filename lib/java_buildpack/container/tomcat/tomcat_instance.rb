@@ -223,16 +223,35 @@ module JavaBuildpack
            return false
           end
           document = read_xml server_xml
+          engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
+          context   = REXML::XPath.match(document, '/Server/Service/Engine/Host/Context').first
           if obj.has_key?("valve")
            
-           for i in 0..obj['valve'].length-1
+          for i in 0..obj['valve']['host'].length-1
             valve = REXML::Element.new('Valve')  
-            obj['valve'][i].each do |key, array|
+            obj['valve']['host'][i].each do |key, array|
             valve.add_attribute  key, array
             end
             host.elements.add(valve)
           end
+          
+           for i in 0..obj['valve']['engine'].length-1
+            valve = REXML::Element.new('Valve')  
+            obj['valve'][i].each do |key, array|
+            valve.add_attribute  key, array
+            end
+            engine.elements.add(valve)
+          end
+          
+           for i in 0..obj['valve']['context'].length-1
+            valve = REXML::Element.new('Valve')  
+            obj['valve'][i].each do |key, array|
+            valve.add_attribute  key, array
+            end
+            context.elements.add(valve)
+          end
+          
         end  
           write_xml server_xml, document
        end
