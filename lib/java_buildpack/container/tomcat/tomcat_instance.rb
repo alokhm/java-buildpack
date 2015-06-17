@@ -227,7 +227,7 @@ module JavaBuildpack
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
           context = REXML::Element.new('Context')
           host.elements.add(context)
-          context   = REXML::XPath.match(document, '/Server/Service/Engine/Host/Context').first
+          context1   = REXML::XPath.match(document, '/Server/Service/Engine/Host/Context').first
           if obj.has_key?("valve")
            
           for i in 0..obj['valve']['host'].length-1
@@ -251,7 +251,7 @@ module JavaBuildpack
             obj['valve']['context'][i].each do |key, array|
             valve.add_attribute  key, array
             end
-           context.elements.add(valve)
+           context1.elements.add(valve)
           end
           
         end  
