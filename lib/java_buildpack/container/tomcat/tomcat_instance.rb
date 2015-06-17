@@ -223,13 +223,12 @@ module JavaBuildpack
            return false
           end
           document = read_xml server_xml
-          puts document
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
-          #context = REXML::Element.new('Context')
-          #host.elements.add(context)
-          context   = REXML::XPath.match(document, '/Server/Service/Engine/Host/Context').first
-          puts context
+          context = REXML::Element.new('Context')
+          document.elements.add(context)
+          #context   = REXML::XPath.match(document, '/Server/Service/Engine/Host/Context').first
+          puts document
           if obj.has_key?("valve")
            
           for i in 0..obj['valve']['host'].length-1
