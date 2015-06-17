@@ -223,11 +223,13 @@ module JavaBuildpack
            return false
           end
           document = read_xml server_xml
+          puts document
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
-          context = REXML::Element.new('Context')
-          host.elements.add(context)
-          context1   = REXML::XPath.match(document, '/Server/Service/Engine/Host/Context').first
+          #context = REXML::Element.new('Context')
+          #host.elements.add(context)
+          context   = REXML::XPath.match(document, '/Server/Service/Engine/Host/Context').first
+          puts context
           if obj.has_key?("valve")
            
           for i in 0..obj['valve']['host'].length-1
@@ -251,7 +253,7 @@ module JavaBuildpack
             obj['valve']['context'][i].each do |key, array|
             valve.add_attribute  key, array
             end
-           context1.elements.add(valve)
+           #context.elements.add(valve)
           end
           
         end  
