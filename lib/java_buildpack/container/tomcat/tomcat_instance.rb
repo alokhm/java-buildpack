@@ -225,8 +225,8 @@ module JavaBuildpack
           document = read_xml server_xml
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
-          context = REXML::Element.new('Context')
-          host.insert_before '//Host', context
+          #context = REXML::Element.new('Context')
+          #host.insert_before '//Host', context
           #context   = REXML::XPath.match(document, '/Server/Service/Engine/Host/Context').first
           puts document
           if obj.has_key?("valve")
