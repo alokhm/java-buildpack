@@ -238,7 +238,7 @@ module JavaBuildpack
           
            for i in 0..obj['valve']['engine'].length-1
             valve = REXML::Element.new('Valve')  
-            obj['valve'][i].each do |key, array|
+            obj['valve']['engine'][i].each do |key, array|
             valve.add_attribute  key, array
             end
             engine.elements.add(valve)
@@ -246,7 +246,7 @@ module JavaBuildpack
           
            for i in 0..obj['valve']['context'].length-1
             valve = REXML::Element.new('Valve')  
-            obj['valve'][i].each do |key, array|
+            obj['valve']['context'][i].each do |key, array|
             valve.add_attribute  key, array
             end
             context.elements.add(valve)
