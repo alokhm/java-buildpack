@@ -223,6 +223,8 @@ module JavaBuildpack
            return false
           end
           document = read_xml server_xml
+          document1 = read_xml context_xml
+          context  = REXML::XPath.match(document, '/Context').first
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
           #context = REXML::Element.new('Context')
@@ -252,7 +254,7 @@ module JavaBuildpack
             obj['valve']['context'][i].each do |key, array|
             valve.add_attribute  key, array
             end
-           #context.elements.add(valve)
+           context.elements.add(valve)
           end
           
         end  
