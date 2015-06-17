@@ -214,7 +214,7 @@ module JavaBuildpack
            write_xml server_xml, document
       end 
       #using REXML we are adding Valve Elements under Host tag in server.xml 
-       def valve_appender
+        def valve_appender
           valveclass= ENV['valve']
           begin
            obj=JSON.parse(valveclass)
@@ -227,15 +227,15 @@ module JavaBuildpack
           if obj.has_key?("valve")
            
            for i in 0..obj['valve'].length-1
-            valve = REXML::Element.new('Valve')  
-            obj['valve'][i].each do |key, array|
-            valve.add_attribute  key, array
-            end
-            host.elements.add(valve)
-          end
-        end  
+             valve = REXML::Element.new('Valve')  
+             obj['valve'][i].each do |attribute, value|
+             valve.add_attribute  attribute, value
+             end
+             host.elements.add(valve)
+           end
+          end  
           write_xml server_xml, document
-       end
+        end
          
          
     end
