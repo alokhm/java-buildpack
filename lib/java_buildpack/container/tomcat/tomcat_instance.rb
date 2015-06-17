@@ -224,7 +224,7 @@ module JavaBuildpack
           end
           document = read_xml server_xml
           document1 = read_xml context_xml
-          puts document1
+          #puts document1
           context  = REXML::XPath.match(document1, '/Context').first
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
@@ -260,6 +260,7 @@ module JavaBuildpack
           
         end  
           write_xml server_xml, document
+          write_xml context_xml,document1
        end
          
          
