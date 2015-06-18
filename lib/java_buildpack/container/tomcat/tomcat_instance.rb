@@ -233,7 +233,7 @@ module JavaBuildpack
           #context   = REXML::XPath.match(document, '/Server/Service/Engine/Host/Context').first
           #puts document
           if obj.has_key?("valve")
-          unless obj['valve'].has_key?('host')
+          if obj['valve'].has_key?('host')
           for i in 0..obj['valve']['host'].length-1
             valve = REXML::Element.new('Valve')  
             obj['valve']['host'][i].each do |key, array|
