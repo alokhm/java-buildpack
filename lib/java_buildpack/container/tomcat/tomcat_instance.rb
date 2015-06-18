@@ -244,6 +244,9 @@ module JavaBuildpack
           end
         end
         end
+        
+           if obj['valve'].has_key?('engine')
+           unless obj['valve']['engine'].nil?    
            for i in 0..obj['valve']['engine'].length-1
             valve = REXML::Element.new('Valve')  
             obj['valve']['engine'][i].each do |key, array|
@@ -252,7 +255,11 @@ module JavaBuildpack
             #engine.elements.add(valve)
             engine.insert_before '//Host', valve
           end
+        end
+      end
           
+           if obj['valve'].has_key?('context')
+           unless obj['valve']['context'].nil?  
            for i in 0..obj['valve']['context'].length-1
             valve = REXML::Element.new('Valve')  
             obj['valve']['context'][i].each do |key, array|
@@ -260,6 +267,8 @@ module JavaBuildpack
             end
            context.elements.add(valve)
           end
+        end
+      end  
           
         end  
           write_xml server_xml, document
