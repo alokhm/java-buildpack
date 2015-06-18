@@ -234,6 +234,7 @@ module JavaBuildpack
           #puts document
           if obj.has_key?("valve")
           if obj['valve'].has_key?('host')
+          unless obj['valve']['host'].nil?  
           for i in 0..obj['valve']['host'].length-1
             valve = REXML::Element.new('Valve')  
             obj['valve']['host'][i].each do |key, array|
@@ -241,6 +242,7 @@ module JavaBuildpack
             end
             host.elements.add(valve)
           end
+        end
         end
            for i in 0..obj['valve']['engine'].length-1
             valve = REXML::Element.new('Valve')  
