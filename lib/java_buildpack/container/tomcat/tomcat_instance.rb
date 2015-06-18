@@ -240,7 +240,7 @@ module JavaBuildpack
                  elsif k == 'context'
                    context.elements.add(valve)
                  elsif k == 'engine'
-                   engine.elements.add(valve)
+                   engine.insert_before '//Host', valve
    
                  end 
                end
