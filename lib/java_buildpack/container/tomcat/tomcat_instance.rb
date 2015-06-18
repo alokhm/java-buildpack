@@ -237,8 +237,8 @@ module JavaBuildpack
           unless obj['valve']['host'].nil?  
           for i in 0..obj['valve']['host'].length-1
             valve = REXML::Element.new('Valve')  
-            obj['valve']['host'][i].each do |key, array|
-            valve.add_attribute  key, array
+            obj['valve']['host'][i].each do |attribute, value|
+            valve.add_attribute  attribute, value
             end
             host.elements.add(valve)
           end
@@ -249,8 +249,8 @@ module JavaBuildpack
            unless obj['valve']['engine'].nil?    
            for i in 0..obj['valve']['engine'].length-1
             valve = REXML::Element.new('Valve')  
-            obj['valve']['engine'][i].each do |key, array|
-            valve.add_attribute  key, array
+            obj['valve']['engine'][i].each do |attribute, value|
+            valve.add_attribute  attribute, value
             end
             #engine.elements.add(valve)
             engine.insert_before '//Host', valve
@@ -262,8 +262,8 @@ module JavaBuildpack
            unless obj['valve']['context'].nil?  
            for i in 0..obj['valve']['context'].length-1
             valve = REXML::Element.new('Valve')  
-            obj['valve']['context'][i].each do |key, array|
-            valve.add_attribute  key, array
+            obj['valve']['context'][i].each do |attribute, value|
+            valve.add_attribute  attribute, value
             end
            context.elements.add(valve)
           end
