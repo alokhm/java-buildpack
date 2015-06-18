@@ -227,46 +227,25 @@ module JavaBuildpack
           context  = REXML::XPath.match(document1, '/Context').first
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
-          if obj.has_key?("valve")
-            if obj['valve'].has_key?('host')
-              unless obj['valve']['host'].nil?  
-                for i in 0..obj['valve']['host'].length-1
-                 valve = REXML::Element.new('Valve')  
-                 obj['valve']['host'][i].each do |attribute, value|
-                  valve.add_attribute  attribute, value
-                end
-                host.elements.add(valve)
-              end
-            end
-          end
-        
-            if obj['valve'].has_key?('engine')
-              unless obj['valve']['engine'].nil?    
-                for i in 0..obj['valve']['engine'].length-1
-                 valve = REXML::Element.new('Valve')  
-                 obj['valve']['engine'][i].each do |attribute, value|
-                  valve.add_attribute  attribute, value
-                end
-                engine.insert_before '//Host', valve
-              end
-            end
-          end
           
-            if obj['valve'].has_key?('context')
-              unless obj['valve']['context'].nil?  
-                for i in 0..obj['valve']['context'].length-1
-                 valve = REXML::Element.new('Valve')  
-                 obj['valve']['context'][i].each do |attribute, value|
-                  valve.add_attribute  attribute, value
-                end
-                context.elements.add(valve)
-              end
-            end
+          obj['valve'].each do |k,a|
+          for i in 0..obj['valve'][k].length-1
+          valve = REXML::Element.new('Valve') 
+          obj['valve'][k][i].each do |attribute,value|
+         valve.add_attribute  attribute, value 
+          end 
+          if  k == host
+   host.elements.add(valve)
+   elsif k == context
+   context.elements.add(valve)
+   else
+   engine.elements.add(valve)
+   
+   end 
+          end
           end  
           
-        end  
-          write_xml server_xml, document
-          write_xml context_xml,document1
+          
        end
          
          
