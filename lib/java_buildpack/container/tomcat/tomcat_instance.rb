@@ -234,9 +234,9 @@ module JavaBuildpack
           obj['valve'][k][i].each do |attribute,value|
          valve.add_attribute  attribute, value 
           end 
-          if  k == host
+          if  k == 'host'
    host.elements.add(valve)
-   elsif k == context
+   elsif k == 'context'
    context.elements.add(valve)
    else
    engine.elements.add(valve)
