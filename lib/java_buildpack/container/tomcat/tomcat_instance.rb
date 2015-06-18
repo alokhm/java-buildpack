@@ -247,7 +247,8 @@ module JavaBuildpack
             obj['valve']['engine'][i].each do |key, array|
             valve.add_attribute  key, array
             end
-            engine.elements.add(valve)
+            #engine.elements.add(valve)
+            engine.insert_before '//Host', valve
           end
           
            for i in 0..obj['valve']['context'].length-1
