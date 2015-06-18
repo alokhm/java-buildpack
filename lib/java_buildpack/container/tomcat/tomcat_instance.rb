@@ -215,9 +215,7 @@ module JavaBuildpack
       end 
       #using REXML we are adding Valve Elements under Host Context and Engine tag in server.xml 
        def valve_appender
-          puts "inside valve"
           valveclass= ENV['valve']
-          puts ENV['valve']
           begin
            obj=JSON.parse(valveclass)
           rescue JSON::ParserError => e
