@@ -142,7 +142,9 @@ module JavaBuildpack
           configure_linking
           configure_jasper
           if ENV.has_key?('valve')
+          unless ENV['valve'].nil? && ENV['valve'].empty?
           valve_appender
+          end
           end
         end
       end
