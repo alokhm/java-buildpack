@@ -227,8 +227,9 @@ module JavaBuildpack
           context  = REXML::XPath.match(document1, '/Context').first
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
-          
+          if obj.has_key?("valve")
           obj['valve'].each do |k,a|
+          if obj['valve'].has_key?(k) 	
           for i in 0..obj['valve'][k].length-1
           valve = REXML::Element.new('Valve') 
           obj['valve'][k][i].each do |attribute,value|
@@ -242,8 +243,10 @@ module JavaBuildpack
    engine.elements.add(valve)
    
    end 
+   end
           end
-          end  
+          end 
+          end
        write_xml server_xml, document
           write_xml context_xml,document1
 		     
