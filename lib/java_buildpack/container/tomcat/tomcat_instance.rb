@@ -223,12 +223,11 @@ module JavaBuildpack
            return false
           end
           document = read_xml server_xml
-          document1 = read_xml context_xml
+          documentcon = read_xml context_xml
           context  = REXML::XPath.match(document1, '/Context').first
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
-          
-            obj.each do |k,a|
+          obj.each do |k,a|
              if obj.has_key?(k) 	
                for i in 0..obj[k].length-1
                  valve = REXML::Element.new('Valve') 
@@ -241,18 +240,13 @@ module JavaBuildpack
                    context.elements.add(valve)
                  elsif k == 'engine'
                    engine.insert_before '//Host', valve
-   
                  end 
                end
              end
             end 
           write_xml server_xml, document
-          write_xml context_xml,document1
-		     
-          
+          write_xml context_xml,documentcon
        end
-         
-         
     end
   end
 end
