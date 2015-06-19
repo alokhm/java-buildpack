@@ -228,7 +228,7 @@ module JavaBuildpack
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
           obj.each do |k,a|
-             if obj.has_key?(k) && k!=nil 	
+             if obj.has_key?(k)	
                for i in 0..obj[k].length-1
                  valve = REXML::Element.new('Valve') 
                  obj[k][i].each do |attribute,value|
