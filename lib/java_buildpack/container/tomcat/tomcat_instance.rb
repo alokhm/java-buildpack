@@ -224,7 +224,7 @@ module JavaBuildpack
           end
           document = read_xml server_xml
           documentcon = read_xml context_xml
-          context  = REXML::XPath.match(document1, '/Context').first
+          context  = REXML::XPath.match(documentcon, '/Context').first
           engine= REXML::XPath.match(document, '/Server/Service/Engine').first
           host   = REXML::XPath.match(document, '/Server/Service/Engine/Host').first
           obj.each do |k,a|
