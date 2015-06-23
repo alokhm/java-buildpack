@@ -79,8 +79,7 @@ Also respective version of JCE security jars will be copied over to jre/security
 This build has now enhanced to support different valves which user will set through environment variables.Environment variables which is set as valve will be in JSON format.Which will contain three type of catalina containers which are host,context and engine.Based on these container valve entry with attributes and values will set into respective containers inside server and context xml files.These environment variable user can set with manifest file or through CF cli.Before setting these valves user has to give G,A,V coordinates of jars so that it will download and available under tomcat/lib folder.If user is not providing G,A,V coordinates then user needs to put these jars into tomcat/lib folder. 	
 
 ##Setting of Environment variable for Valves
-Valves which users are setting here are in JSON format and contains three type of catalina containers.which are host,engine and context
-valve and value are fixed.it behaves as key here.
+Valves which users are setting here are in JSON format and contains three type of catalina containers.which are host,engine and context.it behaves as key here.
 ```
 {
                         "host" : [
