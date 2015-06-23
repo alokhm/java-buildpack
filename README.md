@@ -1,4 +1,4 @@
-# Cloud Foundry Java Buildpack + support zip files are having *.war + Shared lib support with YAML upload having maven GAV co-ordinates with custom tomcat,jdk,jce and Valve support
+# Cloud Foundry Java Buildpack + support zip files are having *.war + Shared lib support with YAML upload having maven GAV co-ordinates with custom tomcat,jdk,jce and Valve support with Multiple catalina containers
 [![Build Status](https://travis-ci.org/cloudfoundry/java-buildpack.svg?branch=master)](https://travis-ci.org/cloudfoundry/java-buildpack)
 [![Dependency Status](https://gemnasium.com/cloudfoundry/java-buildpack.svg)](https://gemnasium.com/cloudfoundry/java-buildpack)
 [![Code Climate](https://codeclimate.com/repos/5224adaec7f3a3415107004c/badges/bc49f7d7f8dfc47057c8/gpa.svg)](https://codeclimate.com/repos/5224adaec7f3a3415107004c/feed)
@@ -74,7 +74,7 @@ libraries: #specify all libraries as a sequence of GAV Coordinates. These would 
 Also respective version of JCE security jars will be copied over to jre/security/ folder.	
  cf p <app-name> -b https://github.com/happiestminds-covisint/java-buildpack.git#custom-jdk-tomcat-jce-enabled -p repo-manifest.zip 
 ```
-##Support for Valves
+##Support for Valves with Multiple catalina containers
 
 This build has now enhanced to support different valves which user will set through environment variables.Environment variables which is set as valve will be in JSON format.Which will contain three type of catalina containers which are host,context and engine.Based on these container valve entry with attributes and values will set into respective containers inside server and context xml files.These environment variable user can set with manifest file or through CF cli.Before setting these valves user has to give G,A,V coordinates of jars so that it will download and available under tomcat/lib folder.If user is not providing G,A,V coordinates then user needs to put these jars into tomcat/lib folder. 	
 
