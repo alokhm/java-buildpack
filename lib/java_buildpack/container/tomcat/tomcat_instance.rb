@@ -25,7 +25,6 @@ require 'pathname'
 require 'digest/sha1'
 require 'json'
 
-
 module JavaBuildpack
   module Container
 
@@ -39,7 +38,7 @@ module JavaBuildpack
       def initialize(context)
         super(context) { |candidate_version| candidate_version.check_size(3) }
         @yamlobj=YamlParser.new(context)
-      end
+       end
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
@@ -197,7 +196,7 @@ module JavaBuildpack
                    
                end  
                return false
-      end
+         end
       #using REXML we are adding Context Elements under Host tag in server.xml   
       def context_path_appender(contextpaths)
            document = read_xml server_xml
@@ -212,8 +211,8 @@ module JavaBuildpack
             end
                     
            write_xml server_xml, document
-      end 
-      #using REXML we are adding Valve Elements under Host Context and Engine tag in server.xml 
+         end 
+       #using REXML we are adding Valve Elements under Host Context and Engine tag in server.xml 
        def valve_appender
           valveclass= ENV['valve']
           begin

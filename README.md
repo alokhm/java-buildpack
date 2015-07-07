@@ -53,7 +53,7 @@ libraries: #specify all libraries as a sequence of GAV Coordinates. These would 
 ```
 ##Following are the steps to push this yaml and test out the buildpack..
 1.	Copy the attached YAML to an empty directory
-2.	With PWD being the directory in 1 do a "cf p <app-name> -b https://github.com/happiestminds-covisint/java-buildpack.git”
+2.	With PWD being the directory in 1 do a "cf p <app-name> -b https://github.com/Covisint-PST/java-buildpack.git”
 3.	Your instance should come up with out issue.
 4.	Now go to http://<domain>/check. And you should get a success response.
 5.	Now go to http://<domain>/classes?className=sample.SampleTCValve. And it will tell the sample.SampleTCValve class was found. This class is part of the library that is being pushed using the manifest and it goes into the shared classpath.
@@ -64,7 +64,7 @@ libraries: #specify all libraries as a sequence of GAV Coordinates. These would 
 
 ##convert YAML file into zip formation and use like below 
 ```
- cf p <app-name> -b https://github.com/happiestminds-covisint/java-buildpack.git -p repo-manifest.zip 
+ cf p <app-name> -b https://github.com/Covisint-PST/java-buildpack.git -p repo-manifest.zip 
 ```
 
 
@@ -72,7 +72,7 @@ libraries: #specify all libraries as a sequence of GAV Coordinates. These would 
 ```
 	This build has now enhanced to support different jdk and tomcat versions enable via config.yml and based on that versions both jdk(open and Oracle) and tomcat will be downloaded.
 Also respective version of JCE security jars will be copied over to jre/security/ folder.	
- cf p <app-name> -b https://github.com/happiestminds-covisint/java-buildpack.git#custom-jdk-tomcat-jce-enabled -p repo-manifest.zip 
+ cf p <app-name> -b https://github.com/Covisint-PST/java-buildpack.git -p repo-manifest.zip 
 ```
 ##Support for Valves with Multiple catalina containers
 
@@ -82,51 +82,52 @@ This build has now enhanced to support different valves which user will set thro
 Valves which users are setting here are in JSON format and contains three type of catalina containers.which are host,engine and context.it behaves as key here.
 ```
 {
-                        "host" : [
-                                    {
-                                                "className":"c1",
-                                                "changeSessionIdOnAuthentication":"false",
-                                                "disableProxyCaching":"false",
-                                                "securePagesWithPragma":"true"
-                                    },
-                                    {
-                                                "className":"c2",
-                                                "alwaysUseSession":"true",
-                                                "changeSessionIdOnAuthentication":"true"
-                                    }
-                        ],
-                        "engine" : [
-                                     {
-                                                "className":"c1",
-                                                "changeSessionIdOnAuthentication":"false",
-                                                "disableProxyCaching":"false",
-                                                "securePagesWithPragma":"true"
-                                     },
-                                    {
-                                                "className":"c2",
-                                                "alwaysUseSession":"true",
-                                                "changeSessionIdOnAuthentication":"true"
-                                    }
-                        ],
-                        "context" : [
-                                    {
-                                                "className":"c1",
-                                                "changeSessionIdOnAuthentication":"false",
-                                                "disableProxyCaching":"false",
-                                                "securePagesWithPragma":"true"
-                                    },
-                                    {
-                                                "className":"c2",
-                                                "alwaysUseSession":"true",
-                                                "changeSessionIdOnAuthentication":"true"
-                                    }
-                        ] }				
+	"host" : [
+				{
+				 "className":"c1",
+				 "changeSessionIdOnAuthentication":"false",
+				 "disableProxyCaching":"false",
+				 "securePagesWithPragma":"true"
+				},
+				{
+				 "className":"c2",
+				 "alwaysUseSession":"true",
+				 "changeSessionIdOnAuthentication":"true"
+				}
+			 ],
+	"engine" :[
+				{
+				 "className":"c1",
+				 "changeSessionIdOnAuthentication":"false",
+				 "disableProxyCaching":"false",
+				 "securePagesWithPragma":"true"
+				},
+				{
+				 "className":"c2",
+				 "alwaysUseSession":"true",
+				 "changeSessionIdOnAuthentication":"true"
+				}
+			  ],
+	"context" : [
+				 {
+				  "className":"c1",
+				  "changeSessionIdOnAuthentication":"false",
+				  "disableProxyCaching":"false",
+				  "securePagesWithPragma":"true"
+				 },
+				 {
+				  "className":"c2",
+				  "alwaysUseSession":"true",
+				  "changeSessionIdOnAuthentication":"true"
+				 }
+				] 
+}				
 ```
 ## Usage
 To use this buildpack specify the URI of the repository when pushing an application to Cloud Foundry:
 
 ```bash
-cf push <APP-NAME> -p <ARTIFACT> -b https://github.com/happiestminds-covisint/java-buildpack.git
+cf push <APP-NAME> -p <ARTIFACT> -b https://github.com/Covisint-PST/java-buildpack.git
 ```
 
 ## Examples
@@ -261,29 +262,3 @@ cd /vagrant/<directory-containing-war-or-zip-files>
 /vagrant/vagrant/run/compile
 /vagrant/vagrant/run/release
 ```
-
-Connect to the Tomcat instance on port 12345 on your local machine.
-
-[http://localhost:12345](http://localhost:12345)
-
-	
-## Contributing
-[Pull requests][] are welcome; see the [contributor guidelines][] for details.
-
-## License
-This buildpack is released under version 2.0 of the [Apache License][].
-
-[`config/` directory]: config
-[Apache License]: http://www.apache.org/licenses/LICENSE-2.0
-[Cloud Foundry]: http://www.cloudfoundry.com
-[contributor guidelines]: CONTRIBUTING.md
-[disables `remote_downloads`]: docs/extending-caches.md#configuration
-[Environment Variables]: http://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html#env-block
-[GitHub's forking functionality]: https://help.github.com/articles/fork-a-repo
-[Grails]: http://grails.org
-[Groovy]: http://groovy.codehaus.org
-[Play Framework]: http://www.playframework.com
-[pull request]: https://help.github.com/articles/using-pull-requests
-[Pull requests]: http://help.github.com/send-pull-requests
-[Running Cloud Foundry locally]: http://docs.cloudfoundry.org/deploying/run-local.html
-[Spring Boot]: http://projects.spring.io/spring-boot/
