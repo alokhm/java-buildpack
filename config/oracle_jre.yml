@@ -24,7 +24,7 @@ jre:
   repository_root: ""
 memory_calculator:
   version: 1.+
-  repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"
+  repository_root: ! '{default.repository.root}/memory-calculator/{platform}/{architecture}'
   memory_sizes:
     metaspace: 64m..
     permgen: 64m..
